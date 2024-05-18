@@ -1,7 +1,10 @@
+import img from '../imgs/pp.jpg'
+
+
 const SideBar = () => {
     return ( <div className="sidebar p-4 flex flex-col h-screen w-full justify-between">
-        <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-orange-400 mr-2"></div>
+        <div className="flex items-center mt-8">
+            <div className="w-14 h-14 mr-2"><img src={img} alt="" className='rounded-full'/></div>
             <h2 className="">Ahmed Sheikh</h2>
         </div>
         <ul>

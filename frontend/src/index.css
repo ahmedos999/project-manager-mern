@@ -8,3 +8,10 @@ body{
   color: #e1e1e1;
   font-family: "Poppins", sans-serif;;
 }
+.custom-scrollbar {
+  height: 80vh;
+  padding: 10px;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: thin; /* For Firefox: Makes scrollbar thinner */
+  scrollbar-color: #222222 rgb(8, 8, 8)  ; /* For Firefox: Handle and track color */
+}
