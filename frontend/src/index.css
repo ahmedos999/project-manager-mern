@@ -15,3 +15,7 @@ body{
   scrollbar-width: thin; /* For Firefox: Makes scrollbar thinner */
   scrollbar-color: #222222 rgb(8, 8, 8)  ; /* For Firefox: Handle and track color */
 }
+.inherit{
+  width: inherit;
+  height: inherit;
+}

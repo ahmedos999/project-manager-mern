@@ -1,8 +1,8 @@
 
 
 const FriendCard = ({img}) => {
-    return ( <div className="w-16 h-16 ">
-        <img src={img} alt="" className='rounded-full'/>
+    return ( <div className="w-14  h-14 ">
+        <img src={img} alt="" className='rounded-full inherit'/>
     </div> );
 }
  
