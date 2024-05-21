@@ -3,6 +3,8 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 
+const taskRoutes = require('./routes/taskRoutes')
+
 
 
 const app = express()
@@ -17,7 +19,7 @@ app.use((req,res,next)=>{
 })
 
 // route 
-// app.use('/api/tasks',tasksRoutes)
+app.use('/api/tasks',taskRoutes)
 
 
 mongoose.connect(process.env.MONG_URI).then(()=>{
