@@ -14,7 +14,7 @@ app.use(express.json())
 
 // logging
 app.use((req,res,next)=>{
-    console.log(req.path,res.method)
+    console.log(req.path,req.method)
     next()
 })
 
