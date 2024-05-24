@@ -28,14 +28,14 @@ const Dashboard = () => {
         <h2 className=" text-3xl font-bold">Task Boards</h2>
         <h4 className=" text-lg font-semibold">Facebook</h4>
 
-        <div className="grid grid-cols-4 gap-2 custom-scrollbar auto-rows-min">
+        <div className="grid grid-cols-4 gap-2 custom-scrollbar">
             {
                 tasks && tasks.map((task)=>(
                    <div key={task._id}><Card task={task}></Card></div> 
                 ))
             }
             
-            <div className="rounded-md bg-gray-900 hover:bg-slate-800 shadow-md p-4 cursor-pointer flex justify-center items-center">
+            <div className="rounded-md bg-gray-900 hover:bg-slate-800 shadow-md p-4 cursor-pointer flex justify-center items-center h-48">
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
             
