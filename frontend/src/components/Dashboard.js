@@ -3,6 +3,7 @@ import Card from "./Card";
 import { IoIosAddCircle } from "react-icons/io";
 import Modal from "react-modal";
 import { MdAddToPhotos } from "react-icons/md";
+import TaskDetails from "./taskDetails";
 
 const customStyles = {
     content: {
@@ -17,6 +18,13 @@ const customStyles = {
     },
   }; 
 const Dashboard = () => {
+
+    const [currentTask,setCurrentTask] = useState()
+
+    const openTaskModal = (task)=>{
+        console.log('run')
+        setCurrentTask(task)
+    }
 
     const handleSumbit = async()=>{
 
@@ -79,7 +87,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-4 gap-2 custom-scrollbar auto-rows-max">
             {
                 tasks && tasks.map((task)=>(
-                   <div key={task._id}><Card task={task}></Card></div> 
+                   <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div> 
                 ))
             }
             
@@ -108,6 +116,7 @@ const Dashboard = () => {
         {error && <div className="mt-4 text-red-600 text-sm">{error}</div>}
 
       </Modal>
+      {currentTask && <TaskDetails task={currentTask}></TaskDetails>}
     </div> );
 }
  
