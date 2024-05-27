@@ -4,6 +4,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import Modal from "react-modal";
 import { MdAddToPhotos } from "react-icons/md";
 import TaskDetails from "./taskDetails";
+import { useTaskContext } from "../hooks/useTaskContext";
 
 const customStyles = {
     content: {
@@ -20,6 +21,7 @@ const customStyles = {
 const Dashboard = () => {
 
     const [currentTask,setCurrentTask] = useState()
+    const {tasks,dispatch} = useTaskContext()
 
     const openTaskModal = (task)=>{
         console.log('run')
@@ -37,15 +39,15 @@ const Dashboard = () => {
                 'content-type':'application/json'
             }
         })
-        console.log(response)
+
         const json = await response.json()
-        console.log(json)
 
         if(response.ok){
             setName('')
             setDescription('')
             setCategory('')
             setModalOpen(false)
+            dispatch({type:'CREATE_TASK',payload:json})
         }
 
         if(!response.ok){
@@ -53,7 +55,6 @@ const Dashboard = () => {
         }
     }
 
-    const [tasks,setTasks] = useState([])
     const [modalOpen, setModalOpen] = useState(false);
 
 
@@ -69,13 +70,12 @@ const Dashboard = () => {
             const json = await response.json()
 
             if(response.ok){
-                setTasks(json)
-                console.log(json)
+                dispatch({type:'SET_TASKS',payload:json})
             }
         }
         fetchTasks()
         
-    },[])
+    },[dispatch])
 
     return ( <div className="p-2 ">
         

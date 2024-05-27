@@ -17,16 +17,15 @@ const customStyles = {
 const TaskDetails = (task) => {
 
     const [modalOpen,setModalOpen] = useState(true)
-    const close = ()=>{
-        setModalOpen(false)
-    }
+
     useEffect(()=>{
         setModalOpen(true)
     },[task])
+
     return ( task && <div>
         <Modal
         isOpen={modalOpen}
-        onRequestClose={close}
+        onRequestClose={setModalOpen(false)}
         style={customStyles}
         appElement={document.getElementById('root')}
       >
@@ -34,9 +33,6 @@ const TaskDetails = (task) => {
         <div>{task.task.createdAt}</div>
         <p>{task.task.description}</p>
         <p>{task.task.category}</p>
-        <h2>test</h2>
-
-
       </Modal>
     </div> );
 }
