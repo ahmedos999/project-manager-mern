@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
+import { useTaskContext } from "../hooks/useTaskContext";
 
 const customStyles = {
     content: {
@@ -19,6 +20,7 @@ const TaskDetails = (task) => {
 
   const [modalOpen,setModalOpen] = useState(true)
   const [error,setError] = useState()
+  const {dispatch} = useTaskContext()
 
   const deletetask = async()=>{
     const response = await fetch('api/tasks/'+task.task._id,{
@@ -29,6 +31,7 @@ const TaskDetails = (task) => {
     if(!response.ok){
       setError(json.error)
     }
+    dispatch({type:'DELETE_TASK',payload:json})
     setModalOpen(false)
   }
 
