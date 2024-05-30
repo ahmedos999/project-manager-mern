@@ -16,7 +16,7 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.static.signup = async function(email,password){
+userSchema.statics.signup = async function(email,password){
     const exisits = await this.findOne({email})
 
     if(!email || !password){
@@ -25,6 +25,10 @@ userSchema.static.signup = async function(email,password){
 
     if(!validator.isEmail(email)){
         throw Error('Please enter a valid email')
+    }
+
+    if(!validator.isStrongPassword(password)){
+        throw Error('Password not strong Enough')
     }
 
     if(exisits){
@@ -38,13 +42,13 @@ userSchema.static.signup = async function(email,password){
 
         return user
 }
-userSchema.static.login = async function(email,password){
+userSchema.statics.login = async function(email,password){
 
     if(!email || !password){
-        throw Error('Alll fields must be filled')
+        throw Error('All fields must be filled')
     }
 
-    const user = this.findOne({email})
+    const user = await this.findOne({email})
 
     if(!user){
         throw Error('Incorrect email')
@@ -52,7 +56,7 @@ userSchema.static.login = async function(email,password){
 
     const match = await bcrpypt.compare(password,user.password)
 
-    if(match){
+    if(!match){
         throw Error('Incorrect password')
     }
 
