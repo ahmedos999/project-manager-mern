@@ -1,7 +1,7 @@
 
 import {useState} from 'react'
 
-const Signup = () => {
+export default function Signup() {
     const [email,setEmai] = useState()
     const [password,setPassword] = useState()
     const [error,setError] = useState()
@@ -41,5 +41,3 @@ const Signup = () => {
     {error && <div className='mt-2 text-sm text-red-500 '>{error}</div>}
 </div> );
 }
- 
-export default Signup;
