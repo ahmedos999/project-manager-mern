@@ -4,13 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import TaskContextProvider from './context/taskContext';
+import  AuthContextProvider  from './context/authContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    
+<AuthContextProvider>
   <TaskContextProvider>
     <App />
 </TaskContextProvider>
+</AuthContextProvider>
   
 );
 
