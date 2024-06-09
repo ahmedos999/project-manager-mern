@@ -23,6 +23,7 @@ export const useSignup = ()=>{
             const json = response.json()
     
             if(response.ok){
+                localStorage.setItem('user',json)
                 dispatch({type:'LOGIN',payload:json})
                 setIsLoading(false)
             }
