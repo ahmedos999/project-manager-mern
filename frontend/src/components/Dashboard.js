@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import { MdAddToPhotos } from "react-icons/md";
 import TaskDetails from "./taskDetails";
 import { useTaskContext } from "../hooks/useTaskContext";
+import {useAuthContext} from '../hooks/useAuthContext'
 
 const customStyles = {
     content: {
@@ -22,6 +23,7 @@ const Dashboard = () => {
 
     const [currentTask,setCurrentTask] = useState()
     const {tasks,dispatch} = useTaskContext()
+    const {user} = useAuthContext()
 
     const openTaskModal = (task)=>{
         console.log('run')
@@ -29,6 +31,11 @@ const Dashboard = () => {
     }
 
     const handleSumbit = async()=>{
+        if(!user) {
+            setError('You Must be logged in')
+            return
+        }
+        console.log(user)
 
         const task = {title:title.trim(),description:description.trim(),category:category.trim()}
         console.log(task)
@@ -36,7 +43,9 @@ const Dashboard = () => {
             method:'POST',
             body:JSON.stringify(task),
             headers:{
-                'content-type':'application/json'
+                'content-type':'application/json',
+                'Authorization':`Bearer ${user.token}`
+                  
             }
         })
 
@@ -66,7 +75,11 @@ const Dashboard = () => {
 
     useEffect(()=>{
         const fetchTasks = async()=>{
-            const response = await fetch('/api/tasks')
+            const response = await fetch('/api/tasks',{
+                headers:{
+                    'Authorization':`Bearer ${user.token}`
+                }
+            })
             const json = await response.json()
 
             if(response.ok){
@@ -75,7 +88,7 @@ const Dashboard = () => {
         }
         fetchTasks()
         
-    },[dispatch])
+    },[dispatch,user])
 
     return ( <div className="p-2 ">
         

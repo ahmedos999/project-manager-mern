@@ -18,7 +18,7 @@ export const useSignin = ()=>{
         const json = await response.json()
 
         if(response.ok){
-            localStorage.setItem('user',json)
+            localStorage.setItem('user',JSON.stringify(json))
             setIsLoading(false)
             dispatch({type:'LOGIN',payload:json})
         }else{

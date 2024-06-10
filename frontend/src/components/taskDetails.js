@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
 import { useTaskContext } from "../hooks/useTaskContext";
+import {useAuthContext} from '../hooks/useAuthContext'
 
 const customStyles = {
     content: {
@@ -21,10 +22,14 @@ const TaskDetails = (task) => {
   const [modalOpen,setModalOpen] = useState(true)
   const [error,setError] = useState()
   const {dispatch} = useTaskContext()
+  const {user} = useAuthContext()
 
   const deletetask = async()=>{
     const response = await fetch('api/tasks/'+task.task._id,{
       method:'DELETE',
+      headers:{
+        'Authorization':`Bearer ${user.token}`
+      }
     })
     const json =  await response.json()
 
