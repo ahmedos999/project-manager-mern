@@ -9,12 +9,13 @@ const requireAuth = async(req,res,next)=>{
         return res.status(400).json({error:'Authorzation token required'})
     }
 
-    const token = authorization.split(" "[1])
+    const token = authorization.split(" ")[1]
 
     try{
-        const {_id} = jwt.verify(token,process.env.SECRET)
+        const { _id } = jwt.verify(token, process.env.SECRET)
 
         req.user = await User.findOne({_id}).select('_id')
+        console.log(req.user._id)
         next()
     }catch(e){
         console.log(e)
