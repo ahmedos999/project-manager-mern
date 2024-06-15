@@ -25,9 +25,20 @@ const Dashboard = () => {
     const {tasks,dispatch} = useTaskContext()
     const {user} = useAuthContext()
 
+    const [selectedUsers,setSelectedUsers] = useState([])
+    const users = ['ali','khaild','ahmed']
     const openTaskModal = (task)=>{
         console.log('run')
         setCurrentTask(task)
+    }
+    const handleUserSelection = (e)=>{
+        if(!selectedUsers.includes(e.target.value))
+        setSelectedUsers([...selectedUsers,e.target.value])
+    }
+    const removeUser = (name)=>{
+        const index = selectedUsers.indexOf(name)
+        selectedUsers.splice(index,1)
+        setSelectedUsers([...selectedUsers])
     }
 
     const handleSumbit = async()=>{
@@ -102,8 +113,7 @@ const Dashboard = () => {
                 tasks && tasks.map((task)=>(
                    <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div> 
                 ))
-            }
-            
+            } 
             <div className="rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>setModalOpen(true)}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
@@ -124,6 +134,18 @@ const Dashboard = () => {
         <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="Descripe your task here" onChange={(e)=>setDescription(e.target.value)} value={description}/>
         <label className="text-sm">Task Category</label>
         <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="Add your task categories here" onChange={(e)=>setCategory(e.target.value)} value={category} />
+
+        <label className="text-sm block">Add users to task</label>
+        <select name="allusers" id="users" className="w-full" onChange={(e)=>handleUserSelection(e)}>
+            {users.map((e)=>(
+                <option>{e}</option>
+            ))}
+        </select>
+
+        <div className="flex">
+            {selectedUsers.map((e)=>(<p className="text-xs my-2 mx-1 py-1 px-2 rounded-full bg-slate-500" onClick={()=>removeUser(e)}>{e}</p>))}
+                
+            </div>
         <div className="flex justify-center mt-4"><button className=" bg-slate-600 py-2 px-8 rounded hover:bg-slate-700 mt-2" onClick={handleSumbit}>Add Task</button></div>
 
         {error && <div className="mt-4 text-red-600 text-sm">{error}</div>}
