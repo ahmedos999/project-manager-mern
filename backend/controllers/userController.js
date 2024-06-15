@@ -33,4 +33,15 @@ const signupUser = async(req,res)=>{
     }
 }
 
-module.exports = {loginUser,signupUser}
+const getallusers = async(req,res)=>{
+    try{
+        const allUsers = await User.find().select('email')
+        console.log(allUsers)
+        if(allUsers){
+            res.status(200).json(allUsers)
+        }
+    }catch(e){
+        res.status(400).json({error:'somthing went wrong'})
+    }
+ }
+module.exports = {loginUser,signupUser,getallusers}
