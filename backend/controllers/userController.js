@@ -41,7 +41,7 @@ const getallusers = async(req,res)=>{
             res.status(200).json(allUsers)
         }
     }catch(e){
-        res.status(400).json({error:'somthing went wrong'})
+        res.status(400).json({error:'something went wrong'})
     }
  }
 module.exports = {loginUser,signupUser,getallusers}
