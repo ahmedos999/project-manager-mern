@@ -26,7 +26,7 @@ const Dashboard = () => {
     const {user} = useAuthContext()
 
     const [selectedUsers,setSelectedUsers] = useState([])
-    const users = ['ali','khaild','ahmed']
+    const [users,setUsers] = useState([])
     const openTaskModal = (task)=>{
         console.log('run')
         setCurrentTask(task)
@@ -97,7 +97,24 @@ const Dashboard = () => {
                 dispatch({type:'SET_TASKS',payload:json})
             }
         }
+
+        const fetchUsers = async()=>{
+            const res = await fetch('/api/user/allusers')
+
+            const json = await res.json()
+
+            if(res.ok){
+                // let temp = []
+                // json.map((e)=>{
+                //     temp.push(e.email)
+                // })
+                setUsers(json)
+                
+            }
+        }
+
         fetchTasks()
+        fetchUsers()
         
     },[dispatch,user])
 
@@ -138,12 +155,12 @@ const Dashboard = () => {
         <label className="text-sm block">Add users to task</label>
         <select name="allusers" id="users" className="w-full" onChange={(e)=>handleUserSelection(e)}>
             {users.map((e)=>(
-                <option>{e}</option>
+                <option key={e._id}>{e.email}</option>
             ))}
         </select>
 
-        <div className="flex">
-            {selectedUsers.map((e)=>(<p className="text-xs my-2 mx-1 py-1 px-2 rounded-full bg-slate-500" onClick={()=>removeUser(e)}>{e}</p>))}
+        <div className="flex flex-wrap">
+            {selectedUsers.map((e,index)=>(<p key={index} className="text-xs my-2 mx-1 py-1 px-2 rounded-full bg-slate-500" onClick={()=>removeUser(e)}>{e}</p>))}
                 
             </div>
         <div className="flex justify-center mt-4"><button className=" bg-slate-600 py-2 px-8 rounded hover:bg-slate-700 mt-2" onClick={handleSumbit}>Add Task</button></div>
