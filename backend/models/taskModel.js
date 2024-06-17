@@ -18,6 +18,10 @@ const tasksSchema = Schema({
     user_id:{
         type:String,
         required:true
+    },
+    participants:{
+        type:[String],
+        required:false
     }
 },{timestamps:true}) 
 

@@ -5,13 +5,20 @@ const mongoose =  require('mongoose')
 
 const getTasks = async(req,res)=>{
    const user_id = req.user._id
-    const tasks =  await Task.find({user_id}).sort({createdAt:-1})
+   const user_email = req.user.email
+    const tasks =  await Task.find({$or:[
+      {user_id:user_id},
+      {participants: { $in: [user_email] }}
+   ]}).sort({createdAt:-1});
+   
+   //  const tasks  =  await Task.find({user_id})
+   //  const tasks =  await Task.find({user_id,participants: { $in: [user_id] }} ).sort({createdAt:-1})
 
     res.status(200).json(tasks)
 }
 
 const createTask = async(req,res)=>{
- const {title,category,description} = req.body
+ const {title,category,description,participants} = req.body
 
  if( !title && !category && !description){
     return res.status(400).json({error:'Please fill all fields'})
@@ -21,7 +28,7 @@ const createTask = async(req,res)=>{
  try{
     const user_id = req.user._id
     console.log(user_id)
-    const task = await Task.create({title,category,description,user_id})
+    const task = await Task.create({title,category,description,user_id,participants})
     res.status(200).json(task)
  }catch(e){
     res.status(400).json({error:e.message})

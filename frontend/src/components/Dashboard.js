@@ -25,20 +25,20 @@ const Dashboard = () => {
     const {tasks,dispatch} = useTaskContext()
     const {user} = useAuthContext()
 
-    const [selectedUsers,setSelectedUsers] = useState([])
+    const [participants,setParticipants] = useState([])
     const [users,setUsers] = useState([])
     const openTaskModal = (task)=>{
         console.log('run')
         setCurrentTask(task)
     }
     const handleUserSelection = (e)=>{
-        if(!selectedUsers.includes(e.target.value))
-        setSelectedUsers([...selectedUsers,e.target.value])
+        if(!participants.includes(e.target.value))
+        setParticipants([...participants,e.target.value])
     }
     const removeUser = (name)=>{
-        const index = selectedUsers.indexOf(name)
-        selectedUsers.splice(index,1)
-        setSelectedUsers([...selectedUsers])
+        const index = participants.indexOf(name)
+        participants.splice(index,1)
+        setParticipants([...participants])
     }
 
     const handleSumbit = async()=>{
@@ -46,10 +46,8 @@ const Dashboard = () => {
             setError('You Must be logged in')
             return
         }
-        console.log(user)
 
-        const task = {title:title.trim(),description:description.trim(),category:category.trim()}
-        console.log(task)
+        const task = {title:title.trim(),description:description.trim(),category:category.trim(),participants}
         const response = await fetch('/api/tasks',{
             method:'POST',
             body:JSON.stringify(task),
@@ -104,10 +102,6 @@ const Dashboard = () => {
             const json = await res.json()
 
             if(res.ok){
-                // let temp = []
-                // json.map((e)=>{
-                //     temp.push(e.email)
-                // })
                 setUsers(json)
                 
             }
@@ -160,7 +154,7 @@ const Dashboard = () => {
         </select>
 
         <div className="flex flex-wrap">
-            {selectedUsers.map((e,index)=>(<p key={index} className="text-xs my-2 mx-1 py-1 px-2 rounded-full bg-slate-500" onClick={()=>removeUser(e)}>{e}</p>))}
+            {participants.map((e,index)=>(<p key={index} className="text-xs my-2 mx-1 py-1 px-2 rounded-full bg-slate-500" onClick={()=>removeUser(e)}>{e}</p>))}
                 
             </div>
         <div className="flex justify-center mt-4"><button className=" bg-slate-600 py-2 px-8 rounded hover:bg-slate-700 mt-2" onClick={handleSumbit}>Add Task</button></div>
