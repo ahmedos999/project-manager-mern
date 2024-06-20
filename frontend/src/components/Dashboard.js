@@ -27,8 +27,10 @@ const Dashboard = () => {
 
     const [participants,setParticipants] = useState([])
     const [users,setUsers] = useState([])
-    const openTaskModal = (task)=>{
-        console.log('run')
+
+    const [status,setStatus] = useState('long')
+    const openTaskModal = (task,status)=>{
+        setStatus(status)
         setCurrentTask(task)
     }
     const handleUserSelection = (e)=>{
@@ -47,7 +49,7 @@ const Dashboard = () => {
             return
         }
 
-        const task = {title:title.trim(),description:description.trim(),category:category.trim(),participants}
+        const task = {title:title.trim(),description:description.trim(),category:category.trim(),participants,status}
         const response = await fetch('/api/tasks',{
             method:'POST',
             body:JSON.stringify(task),
@@ -124,10 +126,10 @@ const Dashboard = () => {
             <p className=" text-center">Urget</p>
             {
                 tasks && tasks.map((task)=>(
-                   <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div> 
+                    <>  { task.status === 'urget' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </>
                 ))
             } 
-            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>setModalOpen(true)}>
+            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('urget')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
             </div>
@@ -136,10 +138,10 @@ const Dashboard = () => {
             <p className=" text-center">In progress</p>
             {
                 tasks && tasks.map((task)=>(
-                   <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div> 
+                    <>  { task.status === 'progress' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </>
                 ))
             } 
-            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>setModalOpen(true)}>
+            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('progress')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
             </div>
@@ -149,10 +151,10 @@ const Dashboard = () => {
             <p className=" text-center">Long term</p>
             {
                 tasks && tasks.map((task)=>(
-                   <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div> 
+                  <>  { task.status === 'long' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </>
                 ))
             } 
-            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>setModalOpen(true)}>
+            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('long')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
             </div>
@@ -162,10 +164,10 @@ const Dashboard = () => {
             <p className=" text-center">Delayed</p>
             {
                 tasks && tasks.map((task)=>(
-                   <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div> 
+                    <>  { task.status === 'delayed' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </>
                 ))
             } 
-            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>setModalOpen(true)}>
+            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);;setStatus('delayed')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
             </div>

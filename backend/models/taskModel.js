@@ -22,6 +22,10 @@ const tasksSchema = Schema({
     participants:{
         type:[String],
         required:false
+    },
+    status:{
+        type:String,
+        require:true
     }
 },{timestamps:true}) 
 
