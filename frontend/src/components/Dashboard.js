@@ -29,8 +29,7 @@ const Dashboard = () => {
     const [users,setUsers] = useState([])
 
     const [status,setStatus] = useState('long')
-    const openTaskModal = (task,status)=>{
-        setStatus(status)
+    const openTaskModal = (task)=>{
         setCurrentTask(task)
     }
     const handleUserSelection = (e)=>{
