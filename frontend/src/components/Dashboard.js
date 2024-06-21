@@ -24,12 +24,19 @@ const Dashboard = () => {
     const [currentTask,setCurrentTask] = useState()
     const {tasks,dispatch} = useTaskContext()
     const {user} = useAuthContext()
+    const [taskmodelopen,setTaskmodelopen] = useState(false)
+
+    const openModel = ()=>setTaskmodelopen(true)
+    const closeTaskModel = ()=>setTaskmodelopen(false)
+
+
 
     const [participants,setParticipants] = useState([])
     const [users,setUsers] = useState([])
 
     const [status,setStatus] = useState('long')
     const openTaskModal = (task)=>{
+        openModel()
         setCurrentTask(task)
     }
     const handleUserSelection = (e)=>{
@@ -205,7 +212,7 @@ const Dashboard = () => {
         {error && <div className="mt-4 text-red-600 text-sm">{error}</div>}
 
       </Modal>
-      {currentTask && <TaskDetails task={currentTask}></TaskDetails>}
+      {currentTask && taskmodelopen && <TaskDetails task={currentTask} isOpen={taskmodelopen} closeModol={closeTaskModel}></TaskDetails>}
     </div> );
 }
  

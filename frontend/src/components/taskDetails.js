@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
 import { useTaskContext } from "../hooks/useTaskContext";
@@ -18,9 +18,9 @@ const customStyles = {
     },
   };
 
-const TaskDetails = (task) => {
+const TaskDetails = ({task,isOpen,closeModol}) => {
 
-  const [modalOpen,setModalOpen] = useState(true)
+  // const [modalOpen,setModalOpen] = useState(true)
   const [error,setError] = useState()
   const {dispatch} = useTaskContext()
   const {user} = useAuthContext()
@@ -38,37 +38,32 @@ const TaskDetails = (task) => {
       setError(json.error)
     }
     dispatch({type:'DELETE_TASK',payload:json})
-    setModalOpen(false)
+    closeModol()
   }
 
-    
-
-    useEffect(()=>{
-        setModalOpen(true)
-    },[])
 
     return (<div>
         <Modal
-        isOpen={modalOpen}
-        onRequestClose={()=>setModalOpen(false)}
+        isOpen={isOpen}
+        onRequestClose={()=>closeModol()}
         style={customStyles}
         appElement={document.getElementById('root')}
       >
-        <div className="flex justify-between items-center"><div className="flex"><h2 className=" font-bold text-xl">{task.task.title}</h2></div ><div className=" rounded-full bg-slate-600 p-1"><MdDelete className="text-red-500 text-xl" onClick={deletetask}/></div></div>
+        <div className="flex justify-between items-center"><div className="flex"><h2 className=" font-bold text-xl">{task.title}</h2></div ><div className=" rounded-full bg-slate-600 p-1"><MdDelete className="text-red-500 text-xl" onClick={deletetask}/></div></div>
         
         <div className="my-2">
         <h2 className=" text-slate-400 ">Description</h2>
-        <p className="ml-2 ">{task.task.description}</p>
+        <p className="ml-2 ">{task.description}</p>
         </div>
 
         <div>
           <h2 className=" text-slate-400">Categories</h2>
-        <p className=" bg-red-600 rounded-full py-1 text-xs px-2 w-min text-red-200">{task.task.category}</p>
+        <p className=" bg-red-600 rounded-full py-1 text-xs px-2 w-min text-red-200">{task.category}</p>
         </div>
 
         <div className="my-2">
           <h2 className=" text-slate-400 ">Task participants</h2>
-          <div className="flex gap-1 flex-wrap text-slate-200">{task.task.participants.map((e)=>(<div className=" bg-slate-500 py-1 px-2 rounded-full text-xs">{e}</div>))}</div>
+          <div className="flex gap-1 flex-wrap text-slate-200">{task.participants.map((e)=>(<div className=" bg-slate-500 py-1 px-2 rounded-full text-xs">{e}</div>))}</div>
         </div>
 
         <div className="my-2">
@@ -76,7 +71,7 @@ const TaskDetails = (task) => {
           <p className="text-sm">Me@projectmanger.com</p>
         </div>
 
-        <div className="flex justify-end text-sm text-slate-400">{} {formatDistanceToNow(new Date(task.task.createdAt),{addSuffix:true})}</div>
+        <div className="flex justify-end text-sm text-slate-400">{} {formatDistanceToNow(new Date(task.createdAt),{addSuffix:true})}</div>
         {error && <div>{error}</div>}
       </Modal>
     </div> );
