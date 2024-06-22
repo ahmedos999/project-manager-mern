@@ -13,13 +13,6 @@ const SideBar = () => {
             <div className="w-14 h-14 mr-2"><img src={img} alt="" className='rounded-full'/></div>
             <h2 className="">Ahmed Sheikh</h2>
         </div>
-        <ul>
-            <li>Facebook</li>
-            <li>Twitter</li>
-            <li>Instagram</li>
-            <li>Threads</li>
-            <li>Reddit</li>
-        </ul>
         <button onClick={logout} className='font-bold self-start rounded p-1 bg-gray-800'>
             Logout
         </button>
