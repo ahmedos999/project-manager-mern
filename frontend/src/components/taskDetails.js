@@ -71,7 +71,11 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
           <p className="text-sm">Me@projectmanger.com</p>
         </div>
 
+
+        <button className=" bg-slate-700 p-1 rounded text-green-400">Finish Task</button>
+
         <div className="flex justify-end text-sm text-slate-400">{} {formatDistanceToNow(new Date(task.createdAt),{addSuffix:true})}</div>
+        
         {error && <div>{error}</div>}
       </Modal>
     </div> );
