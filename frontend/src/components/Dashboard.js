@@ -132,7 +132,7 @@ const Dashboard = () => {
             <p className=" text-center">Urget</p>
             {
                 tasks && tasks.map((task)=>(
-                    <>  { task.status === 'urget' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </>
+                    <div key={task._id}>  { task.status === 'urget' && <div onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('urget')}}>
@@ -144,7 +144,7 @@ const Dashboard = () => {
             <p className=" text-center">In progress</p>
             {
                 tasks && tasks.map((task)=>(
-                    <>  { task.status === 'progress' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </>
+                    <div key={task._id}>  { task.status === 'progress' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('progress')}}>
@@ -157,7 +157,7 @@ const Dashboard = () => {
             <p className=" text-center">Long term</p>
             {
                 tasks && tasks.map((task)=>(
-                  <>  { task.status === 'long' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </>
+                  <div key={task._id}>  { task.status === 'long' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('long')}}>
@@ -170,7 +170,7 @@ const Dashboard = () => {
             <p className=" text-center">Delayed</p>
             {
                 tasks && tasks.map((task)=>(
-                    <>  { task.status === 'delayed' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </>
+                    <div key={task._id}>  { task.status === 'delayed' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);;setStatus('delayed')}}>
