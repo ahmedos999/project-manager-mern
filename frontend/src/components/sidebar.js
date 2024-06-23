@@ -1,5 +1,4 @@
 import { useAuthContext } from '../hooks/useAuthContext';
-import img from '../imgs/pp.jpg'
 
 
 const SideBar = () => {
