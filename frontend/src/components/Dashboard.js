@@ -6,6 +6,7 @@ import { MdAddToPhotos } from "react-icons/md";
 import TaskDetails from "./taskDetails";
 import { useTaskContext } from "../hooks/useTaskContext";
 import {useAuthContext} from '../hooks/useAuthContext'
+import { IoIosNotifications } from "react-icons/io";
 
 const customStyles = {
     content: {
@@ -28,6 +29,11 @@ const Dashboard = () => {
 
     const openModel = ()=>setTaskmodelopen(true)
     const closeTaskModel = ()=>setTaskmodelopen(false)
+
+
+    const [openNotifications,setOpenNotifications] = useState(false)
+
+    const toggleDropdown = ()=>setOpenNotifications(!openNotifications)
 
 
 
@@ -122,7 +128,33 @@ const Dashboard = () => {
 
     return ( <div className="p-2 ">
         
+        <div className="flex items-center">
         <input type="text" className="w-full m-4 rounded-full p-2 bg-slate-400 text-gray-100 placeholder:text-gray-100 border-gray-600 border-4" placeholder="Search here ..."/>
+
+
+        <div className="relative inline-block text-left">
+      <div>
+
+          <IoIosNotifications className=" text-white text-3xl hover:cursor-pointer ml-4 relative" onClick={toggleDropdown}/>
+          <div className=" absolute top-0 right-0 text-xs bg-red-600 rounded-full flex justify-center items-center w-4 h-4">3</div>
+        
+      </div>
+
+      {openNotifications && (
+        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          <div className="flex border-b mx-2">
+            <div className=" rounded-full bg-slate-600 flex justify-center items-center w-10 h-8 mt-2 ">G</div>
+            <p className="p-2 text-slate-700 text-sm">Gekko added you to fortnite </p></div>
+            <div className="flex border-b mx-2">
+            <div className=" rounded-full bg-slate-600 flex justify-center items-center w-10 h-8 mt-2 ">G</div>
+            <p className="p-2 text-slate-700 text-sm">jett added you to valorant </p></div>
+            <div className="flex border-b mx-2">
+            <div className=" rounded-full bg-slate-600 flex justify-center items-center w-10 h-8 mt-2 ">G</div>
+            <p className="p-2 text-slate-700 text-sm">jhin added you to league </p></div>
+        </div>
+      )}
+    </div>
+        </div>
         
         <h2 className=" text-4xl font-bold teko">Task Boards</h2>
         <h4 className=" text-lg font-semibold">Facebook</h4>
