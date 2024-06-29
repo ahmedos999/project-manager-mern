@@ -24,3 +24,18 @@ const markasRead = async()=>{
       }
 
 }
+
+
+const addNotification = async()=>{
+    const {user_id,project,owner} =  req.body
+
+    try {
+        const notifications = await Notification.create({user_id,project,owner});
+        res.status(200).json(notifications);
+      } catch (error) {
+        res.status(400).json({ error: error.message });
+      }
+
+}
+
+module.exports = {getAllUserNotification,markasRead,addNotification}
