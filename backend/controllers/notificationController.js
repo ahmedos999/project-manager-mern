@@ -1,4 +1,5 @@
 const Notification = require('../models/Notification');
+const {getIO} = require('../middleware/socketio')
 
 const getAllUserNotification = async(req,res)=>{
     const user_id = req.user._id
@@ -31,6 +32,9 @@ const addNotification = async()=>{
 
     try {
         const notifications = await Notification.create({user_id,project,owner});
+
+        const io = getIO();
+        io.to(user_id).emit('notification', message);
         res.status(200).json(notifications);
       } catch (error) {
         res.status(400).json({ error: error.message });
