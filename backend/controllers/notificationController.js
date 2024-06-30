@@ -1,4 +1,4 @@
-const Notification = require('../models/Notification');
+const Notification = require('../models/NotificationModel');
 const {getIO} = require('../middleware/socketio')
 
 const getAllUserNotification = async(req,res)=>{

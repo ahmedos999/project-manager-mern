@@ -8,7 +8,7 @@ const userRoutes = require('./routes/userRoutes')
 const notificationRoutes = require('./routes/notificationRoutes')
 
 const http = require('http');
-const { initIO } = require('./socket');
+const { initIO } = require('./middleware/socketio');
 
 
 const app = express()
