@@ -7,6 +7,9 @@ import TaskDetails from "./taskDetails";
 import { useTaskContext } from "../hooks/useTaskContext";
 import {useAuthContext} from '../hooks/useAuthContext'
 import { IoIosNotifications } from "react-icons/io";
+import io from 'socket.io-client';
+
+const socket = io('/');
 
 const customStyles = {
     content: {
@@ -123,6 +126,14 @@ const Dashboard = () => {
 
         fetchTasks()
         fetchUsers()
+
+        socket.on('notification', (message) => {
+            alert(message); // Or use a more sophisticated notification system
+          });
+
+          return () => {
+            socket.off('notification');
+          };
         
     },[dispatch,user])
 

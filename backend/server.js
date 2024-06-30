@@ -14,9 +14,6 @@ const { initIO } = require('./middleware/socketio');
 const app = express()
 
   
-  const sendNotification = (userId, message) => {
-    io.to(userId).emit('notification', message);
-  };
 
 
 // access body
