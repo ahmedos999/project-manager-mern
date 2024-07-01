@@ -9,7 +9,7 @@ import {useAuthContext} from '../hooks/useAuthContext'
 import { IoIosNotifications } from "react-icons/io";
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
 
 const customStyles = {
     content: {
@@ -51,8 +51,10 @@ const Dashboard = () => {
         setCurrentTask(task)
     }
     const handleUserSelection = (e)=>{
-        if(!participants.includes(e.target.value))
-        setParticipants([...participants,e.target.value])
+        const selectedIndex = e.target.options.selectedIndex;
+        console.log(users[selectedIndex])
+        if(!participants.includes(users[selectedIndex]))
+        setParticipants([...participants,users[selectedIndex]])
     }
     const removeUser = (name)=>{
         const index = participants.indexOf(name)
@@ -60,13 +62,34 @@ const Dashboard = () => {
         setParticipants([...participants])
     }
 
+    const addNotification = async(user_id,project,owner)=>{
+
+        const response = await fetch('/api/notification',{
+            method:'POST',
+            body:JSON.stringify({user_id,project,owner}),
+            headers:{
+                'content-type':'application/json',
+                'Authorization':`Bearer ${user.token}`
+                  
+            }
+        })
+
+        if(response.ok){
+            console.log('notification added to '+user_id)
+        }
+        
+    }
+
     const handleSumbit = async()=>{
         if(!user) {
             setError('You Must be logged in')
             return
         }
-
-        const task = {title:title.trim(),description:description.trim(),category:category.trim(),participants,status}
+        const participantsEmails = participants.map((p)=>p.email)
+        console.log(participantsEmails)
+        const task = {title:title.trim(),description:description.trim(),category:category.trim(),participants:participantsEmails,status}
+        // console.log(participants)
+        // console.log(task)
         const response = await fetch('/api/tasks',{
             method:'POST',
             body:JSON.stringify(task),
@@ -80,11 +103,15 @@ const Dashboard = () => {
         const json = await response.json()
 
         if(response.ok){
-            setName('')
+            setTitle('')
             setDescription('')
             setCategory('')
             setModalOpen(false)
             dispatch({type:'CREATE_TASK',payload:json})
+
+            participants.map((participant)=>{
+                addNotification(participant._id+'',title,user.email.substring(0,(user.email.indexOf('@'))))
+            })
         }
 
         if(!response.ok){
@@ -95,7 +122,7 @@ const Dashboard = () => {
     const [modalOpen, setModalOpen] = useState(false);
 
 
-    const [title,setName] = useState('')
+    const [title,setTitle] = useState('')
     const [description,setDescription] = useState('')
     const [category,setCategory] = useState('')
 
@@ -145,13 +172,13 @@ const Dashboard = () => {
         fetchUsers()
         fetchNOtifications()
 
-        socket.on('notification', (message) => {
-            alert(message); // Or use a more sophisticated notification system
-          });
+        // socket.on('notification', (message) => {
+        //     alert(message); // Or use a more sophisticated notification system
+        //   });
 
-          return () => {
-            socket.off('notification');
-          };
+        //   return () => {
+        //     socket.off('notification');
+        //   };
         
     },[dispatch,user])
 
@@ -165,15 +192,15 @@ const Dashboard = () => {
       <div>
 
           <IoIosNotifications className=" text-white text-3xl hover:cursor-pointer ml-4 relative" onClick={toggleDropdown}/>
-          <div className=" absolute top-0 right-0 text-xs bg-red-600 rounded-full flex justify-center items-center w-4 h-4">3</div>
+          {notification .length>0 && <div className=" absolute top-0 right-0 text-xs bg-red-600 rounded-full flex justify-center items-center w-4 h-4">{notification.length}</div>}
         
       </div>
 
       {openNotifications && 
     
         <div className="origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-            {notification.map((notification)=>(<div key={notification._id} className="flex border-b mx-2">
-            <div className=" rounded-full bg-slate-600 flex justify-center items-center w-10 h-8 mt-2 ">G</div>
+            {notification.map((notification)=>(<div key={notification._id} className="flex border-b mx-2 p-1 items-center">
+            <div className=" rounded-full bg-slate-600 flex justify-center items-center w-10 h-10 ">{notification.owner[0].toUpperCase()}</div>
             <p className="p-2 text-slate-700 text-sm">{notification.owner} added you to {notification.project} </p></div>))}
         </div>
     
@@ -247,7 +274,7 @@ const Dashboard = () => {
       >
         <div className="flex justify-between"><h2 className="text-3xl font-bold teko mb-8">Add a new Task</h2><MdAddToPhotos className="text-2xl"></MdAddToPhotos></div>
         <label className="text-sm">Task Title</label>
-        <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="here the name of your task" onChange={(e)=>setName(e.target.value)} value={title} />
+        <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="here the name of your task" onChange={(e)=>setTitle(e.target.value)} value={title} />
         <label className="text-sm">Task Description</label>
         <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="Descripe your task here" onChange={(e)=>setDescription(e.target.value)} value={description}/>
         <label className="text-sm">Task Category</label>
@@ -261,7 +288,7 @@ const Dashboard = () => {
         </select>
 
         <div className="flex flex-wrap">
-            {participants.map((e,index)=>(<p key={index} className="text-xs my-2 mx-1 py-1 px-2 rounded-full bg-slate-500" onClick={()=>removeUser(e)}>{e}</p>))}
+            {participants.map((e,index)=>(<p key={index} className="text-xs my-2 mx-1 py-1 px-2 rounded-full bg-slate-500" onClick={()=>removeUser(e)}>{e.email}</p>))}
                 
             </div>
         <div className="flex justify-center mt-4"><button className=" bg-slate-600 py-2 px-8 rounded hover:bg-slate-700 mt-2" onClick={handleSumbit}>Add Task</button></div>
