@@ -9,7 +9,7 @@ import {useAuthContext} from '../hooks/useAuthContext'
 import { IoIosNotifications } from "react-icons/io";
 import io from 'socket.io-client';
 
-const socket = io('/');
+const socket = io('http://localhost:3000');
 
 const customStyles = {
     content: {
@@ -42,6 +42,8 @@ const Dashboard = () => {
 
     const [participants,setParticipants] = useState([])
     const [users,setUsers] = useState([])
+
+    const [notification,setNotification] = useState([])
 
     const [status,setStatus] = useState('long')
     const openTaskModal = (task)=>{
@@ -124,8 +126,24 @@ const Dashboard = () => {
             }
         }
 
+        const fetchNOtifications = async()=>{
+            const res = await fetch('/api/notification',{
+                headers:{
+                    'Authorization':`Bearer ${user.token}`
+                }
+            })
+
+            const json = await res.json()
+
+            if(res.ok){
+                setNotification(json)
+                
+            }
+        }
+
         fetchTasks()
         fetchUsers()
+        fetchNOtifications()
 
         socket.on('notification', (message) => {
             alert(message); // Or use a more sophisticated notification system
@@ -151,19 +169,15 @@ const Dashboard = () => {
         
       </div>
 
-      {openNotifications && (
-        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-          <div className="flex border-b mx-2">
+      {openNotifications && 
+    
+        <div className="origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            {notification.map((notification)=>(<div key={notification._id} className="flex border-b mx-2">
             <div className=" rounded-full bg-slate-600 flex justify-center items-center w-10 h-8 mt-2 ">G</div>
-            <p className="p-2 text-slate-700 text-sm">Gekko added you to fortnite </p></div>
-            <div className="flex border-b mx-2">
-            <div className=" rounded-full bg-slate-600 flex justify-center items-center w-10 h-8 mt-2 ">G</div>
-            <p className="p-2 text-slate-700 text-sm">jett added you to valorant </p></div>
-            <div className="flex border-b mx-2">
-            <div className=" rounded-full bg-slate-600 flex justify-center items-center w-10 h-8 mt-2 ">G</div>
-            <p className="p-2 text-slate-700 text-sm">jhin added you to league </p></div>
+            <p className="p-2 text-slate-700 text-sm">{notification.owner} added you to {notification.project} </p></div>))}
         </div>
-      )}
+    
+      }
     </div>
         </div>
         

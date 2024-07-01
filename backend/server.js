@@ -28,7 +28,7 @@ app.use((req,res,next)=>{
 // route 
 app.use('/api/tasks',taskRoutes)
 app.use('/api/user',userRoutes)
-app.use('./api/notification',notificationRoutes)
+app.use('/api/notification',notificationRoutes)
 
 const server = http.createServer(app);
 initIO(server);
