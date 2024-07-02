@@ -7,7 +7,6 @@ import TaskDetails from "./taskDetails";
 import { useTaskContext } from "../hooks/useTaskContext";
 import {useAuthContext} from '../hooks/useAuthContext'
 import { IoIosNotifications } from "react-icons/io";
-import io from 'socket.io-client';
 
 // const socket = io('http://localhost:3000');
 
@@ -110,7 +109,7 @@ const Dashboard = () => {
             dispatch({type:'CREATE_TASK',payload:json})
 
             participants.map((participant)=>{
-                addNotification(participant._id+'',title,user.email.substring(0,(user.email.indexOf('@'))))
+               return addNotification(participant._id+'',title,user.email.substring(0,(user.email.indexOf('@'))))
             })
         }
 
@@ -192,7 +191,7 @@ const Dashboard = () => {
       <div>
 
           <IoIosNotifications className=" text-white text-3xl hover:cursor-pointer ml-4 relative" onClick={toggleDropdown}/>
-          {notification .length>0 && <div className=" absolute top-0 right-0 text-xs bg-red-600 rounded-full flex justify-center items-center w-4 h-4">{notification.length}</div>}
+          {notification.length>0 && <div className=" absolute top-0 right-0 text-xs bg-red-600 rounded-full flex justify-center items-center w-4 h-4">{notification.length}</div>}
         
       </div>
 
