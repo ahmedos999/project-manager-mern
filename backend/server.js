@@ -8,7 +8,7 @@ const userRoutes = require('./routes/userRoutes')
 const notificationRoutes = require('./routes/notificationRoutes')
 
 const http = require('http');
-const { initIO } = require('./middleware/socketio');
+// const { initIO } = require('./middleware/socketio');
 
 
 const app = express()
@@ -31,7 +31,7 @@ app.use('/api/user',userRoutes)
 app.use('/api/notification',notificationRoutes)
 
 const server = http.createServer(app);
-initIO(server);
+// initIO(server);
 
 
 mongoose.connect(process.env.MONG_URI).then(()=>{

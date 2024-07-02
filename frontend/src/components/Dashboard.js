@@ -79,6 +79,10 @@ const Dashboard = () => {
         
     }
 
+    const markasRead = async()=>{
+        
+    }
+
     const handleSumbit = async()=>{
         if(!user) {
             setError('You Must be logged in')
