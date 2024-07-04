@@ -16,8 +16,18 @@ const SideBar = () => {
         dispatchTask({type:'SET_TASKS',payload:filter})
     }
     useEffect(()=>{
-        if(flag)
-        setCategories(tasks)
+        
+        if(flag && tasks){
+            let uniqueTags = []
+            tasks.forEach(element => {
+                if(!uniqueTags.includes(element.category)) uniqueTags.push(element.category)
+            });
+
+            console.log(uniqueTags)
+
+            setCategories(uniqueTags)
+        }
+        
         
     },[tasks,flag])
 
@@ -32,7 +42,7 @@ const SideBar = () => {
             <h2 className="">{user.email.substring(0,(user.email.indexOf('@')))}</h2>
         </div>
         <div>
-        {categories && categories.map((task)=>(<div key={task._id} onClick={()=>filterTasks(task.category)} >{task.category}</div>))}
+        {categories && categories.map((category,index)=>(<div key={index} onClick={()=>filterTasks(category)} >{category}</div>))}
         </div>
         <button onClick={logout} className='font-bold self-start rounded p-1 bg-gray-800'>
             Logout
