@@ -34,6 +34,8 @@ const Dashboard = () => {
 
 
     const [openNotifications,setOpenNotifications] = useState(false)
+    const [unReadNotificationCount,setUnReadNotificationCount] = useState(0)
+    
 
     const toggleDropdown = ()=>setOpenNotifications(!openNotifications)
 
@@ -80,7 +82,7 @@ const Dashboard = () => {
     }
 
     const markasRead = async()=>{
-        
+
     }
 
     const handleSumbit = async()=>{
@@ -166,6 +168,12 @@ const Dashboard = () => {
             const json = await res.json()
 
             if(res.ok){
+                let count = 0
+                json.map((e)=>{
+                    if(!e.isRead)
+                        count++
+                })
+                setUnReadNotificationCount(count)
                 setNotification(json)
                 
             }
@@ -195,14 +203,14 @@ const Dashboard = () => {
       <div>
 
           <IoIosNotifications className=" text-white text-3xl hover:cursor-pointer ml-4 relative" onClick={toggleDropdown}/>
-          {notification.length>0 && <div className=" absolute top-0 right-0 text-xs bg-red-600 rounded-full flex justify-center items-center w-4 h-4">{notification.length}</div>}
+          {notification.length>0 && <div className=" absolute top-0 right-0 text-xs bg-red-600 rounded-full flex justify-center items-center w-4 h-4">{unReadNotificationCount}</div>}
         
       </div>
 
       {openNotifications && 
     
-        <div className="origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-            {notification.map((notification)=>(<div key={notification._id} className="flex border-b mx-2 p-1 items-center">
+        <div className="origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-2">
+            {notification.map((notification)=>(<div key={notification._id} className={`flex border-b my-1 p-1 rounded items-center ${notification.isRead? 'bg-white':'bg-slate-300'}`} >
             <div className=" rounded-full bg-slate-600 flex justify-center items-center w-10 h-10 ">{notification.owner[0].toUpperCase()}</div>
             <p className="p-2 text-slate-700 text-sm">{notification.owner} added you to {notification.project} </p></div>))}
         </div>
