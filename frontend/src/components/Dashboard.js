@@ -37,7 +37,13 @@ const Dashboard = () => {
     const [unReadNotificationCount,setUnReadNotificationCount] = useState(0)
     
 
-    const toggleDropdown = ()=>setOpenNotifications(!openNotifications)
+    const toggleDropdown = ()=>{
+        setOpenNotifications(!openNotifications)
+        if(openNotifications){
+            markasRead()
+        }
+        
+    }
 
 
 
@@ -82,6 +88,19 @@ const Dashboard = () => {
     }
 
     const markasRead = async()=>{
+        const response = await fetch('/api/notification',{
+            method:'PATCH',
+            headers:{
+                'content-type':'application/json',
+                'Authorization':`Bearer ${user.token}`
+                  
+            }
+        })
+
+        if(response.ok){
+            console.log(response)
+            setUnReadNotificationCount(0)
+        }
 
     }
 
@@ -203,7 +222,7 @@ const Dashboard = () => {
       <div>
 
           <IoIosNotifications className=" text-white text-3xl hover:cursor-pointer ml-4 relative" onClick={toggleDropdown}/>
-          {notification.length>0 && <div className=" absolute top-0 right-0 text-xs bg-red-600 rounded-full flex justify-center items-center w-4 h-4">{unReadNotificationCount}</div>}
+          {unReadNotificationCount>0 && <div className=" absolute top-0 right-0 text-xs bg-red-600 rounded-full flex justify-center items-center w-4 h-4">{unReadNotificationCount}</div>}
         
       </div>
 
