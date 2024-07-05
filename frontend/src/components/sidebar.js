@@ -9,6 +9,7 @@ const SideBar = () => {
     const [categories,setCategories] = useState([])
     const [flag,setFlag] = useState(true)
     
+    
 
     const filterTasks =(categoryFilter)=>{
         setFlag(false)
@@ -22,9 +23,6 @@ const SideBar = () => {
             tasks.forEach(element => {
                 if(!uniqueTags.includes(element.category)) uniqueTags.push(element.category)
             });
-
-            console.log(uniqueTags)
-
             setCategories(uniqueTags)
         }
         
@@ -41,8 +39,8 @@ const SideBar = () => {
             <div className="w-14 h-14 mr-2 bg-slate-600 rounded-full flex justify-center items-center text-3xl">{user.email.substring(0,1).toUpperCase()}</div>
             <h2 className="">{user.email.substring(0,(user.email.indexOf('@')))}</h2>
         </div>
-        <div>
-        {categories && categories.map((category,index)=>(<div key={index} onClick={()=>filterTasks(category)} >{category}</div>))}
+        <div className='grid grid-cols-2'>
+        {categories && categories.map((category,index)=>(<div className='my-1' key={index} onClick={()=>filterTasks(category)} > <p className='p-1 bg-slate-500 rounded-full w-min'>{category}</p></div>))}
         </div>
         <button onClick={logout} className='font-bold self-start rounded p-1 bg-gray-800'>
             Logout
