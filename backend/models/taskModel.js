@@ -19,6 +19,10 @@ const tasksSchema = Schema({
         type:String,
         required:true
     },
+    user_email:{
+        type:String,
+        required:true
+    },
     participants:{
         type:[String],
         required:false

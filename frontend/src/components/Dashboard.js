@@ -113,9 +113,9 @@ const Dashboard = () => {
         }
         const participantsEmails = participants.map((p)=>p.email)
         console.log(participantsEmails)
-        const task = {title:title.trim(),description:description.trim(),category:category.trim(),participants:participantsEmails,status}
+        const task = {title:title.trim(),description:description.trim(),category:category.trim(),user_email:user.email,participants:participantsEmails,status}
         // console.log(participants)
-        // console.log(task)
+        console.log(task)
         const response = await fetch('/api/tasks',{
             method:'POST',
             body:JSON.stringify(task),
@@ -242,17 +242,16 @@ const Dashboard = () => {
         </div>
         
         <h2 className=" text-4xl font-bold teko">Task Boards</h2>
-        <h4 className=" text-lg font-semibold">Facebook</h4>
 
         <div className="grid grid-cols-4 gap-2 custom-scrollbar">
            <div> 
-            <p className=" text-center text-red-400 font-bold">Urget</p>
+            <p className=" text-center text-red-400 font-bold">urgent</p>
             {
                 tasks && tasks.map((task)=>(
-                    <div key={task._id}>  { task.status === 'urget' && task.title.includes(searchTerm) && <div onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
+                    <div key={task._id}>  { task.status === 'urgent' && task.title.includes(searchTerm) && <div onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
-            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('urget')}}>
+            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('urgent')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
             </div>

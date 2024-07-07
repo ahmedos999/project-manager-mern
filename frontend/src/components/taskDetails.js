@@ -85,7 +85,7 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
 
         <div className="my-2">
           <h2 className="text-slate-400">Created by</h2>
-          <p className="text-sm">Me@projectmanger.com</p>
+          <p className="text-sm">{task.user_email}</p>
         </div>
 
 

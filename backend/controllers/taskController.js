@@ -18,18 +18,20 @@ const getTasks = async(req,res)=>{
 }
 
 const createTask = async(req,res)=>{
- const {title,category,description,participants,status} = req.body
+ const {title,category,description,participants,status,user_email} = req.body
+
+ console.log(participants)
 
 
 
- if( !title && !category && !description && !status){
+ if( !title && !category && !description && !status && !user_email){
     return res.status(400).json({error:'Please fill all fields'})
  }
 
 
  try{
     const user_id = req.user._id
-    const task = await Task.create({title,category,description,user_id,participants,status})
+    const task = await Task.create({title,category,description,user_id,user_email,participants,status})
     res.status(200).json(task)
  }catch(e){
     res.status(400).json({error:e.message})
