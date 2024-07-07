@@ -190,7 +190,7 @@ const Dashboard = () => {
 
             if(res.ok){
                 let count = 0
-                json.map((e)=>{
+                json.forEach((e)=>{
                     if(!e.isRead)
                         count++
                 })
