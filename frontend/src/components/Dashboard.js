@@ -35,6 +35,8 @@ const Dashboard = () => {
 
     const [openNotifications,setOpenNotifications] = useState(false)
     const [unReadNotificationCount,setUnReadNotificationCount] = useState(0)
+
+    const [searchTerm,setSearchTerm] = useState('')
     
 
     const toggleDropdown = ()=>{
@@ -215,7 +217,8 @@ const Dashboard = () => {
     return ( <div className="p-2 ">
         
         <div className="flex items-center">
-        <input type="text" className="w-full m-4 rounded-full p-2 bg-slate-400 text-gray-100 placeholder:text-gray-100 border-gray-600 border-4" placeholder="Search here ..."/>
+        <input type="text" value={searchTerm
+        } onChange={(e)=>setSearchTerm(e.target.value)} className="w-full m-4 rounded-full p-2 bg-slate-400 text-gray-100 placeholder:text-gray-100 border-gray-600 border-4" placeholder="Search here ..."/>
 
 
         <div className="relative inline-block text-left">
@@ -246,7 +249,7 @@ const Dashboard = () => {
             <p className=" text-center">Urget</p>
             {
                 tasks && tasks.map((task)=>(
-                    <div key={task._id}>  { task.status === 'urget' && <div onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
+                    <div key={task._id}>  { task.status === 'urget' && task.title.includes(searchTerm) && <div onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('urget')}}>
@@ -258,7 +261,7 @@ const Dashboard = () => {
             <p className=" text-center">In progress</p>
             {
                 tasks && tasks.map((task)=>(
-                    <div key={task._id}>  { task.status === 'progress' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
+                    <div key={task._id}>  { task.status === 'progress' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('progress')}}>
@@ -271,7 +274,7 @@ const Dashboard = () => {
             <p className=" text-center">Long term</p>
             {
                 tasks && tasks.map((task)=>(
-                  <div key={task._id}>  { task.status === 'long' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
+                  <div key={task._id}>  { task.status === 'long' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('long')}}>
@@ -284,7 +287,7 @@ const Dashboard = () => {
             <p className=" text-center">Delayed</p>
             {
                 tasks && tasks.map((task)=>(
-                    <div key={task._id}>  { task.status === 'delayed' && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
+                    <div key={task._id}>  { task.status === 'delayed' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);;setStatus('delayed')}}>
