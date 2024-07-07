@@ -26,7 +26,7 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
   const {user} = useAuthContext()
 
   const deletetask = async()=>{
-    const response = await fetch('api/tasks/'+task.task._id,{
+    const response = await fetch('api/tasks/'+task._id,{
       method:'DELETE',
       headers:{
         'Authorization':`Bearer ${user.token}`
@@ -38,6 +38,23 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
       setError(json.error)
     }
     dispatch({type:'DELETE_TASK',payload:json})
+    closeModol()
+  }
+
+  const finishTask=async()=>{
+    const response = await fetch('api/tasks/'+task._id,{
+      method:'PATCH',
+      headers:{
+        'Authorization':`Bearer ${user.token}`
+      }
+    })
+    const json =  await response.json()
+
+    if(!response.ok){
+      setError(json.error)
+    }
+    dispatch({type:'FINISH_TASK',payload:task})
+    // console.log(task)
     closeModol()
   }
 
@@ -63,7 +80,7 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
 
         <div className="my-2">
           <h2 className=" text-slate-400 ">Task participants</h2>
-          <div className="flex gap-1 flex-wrap text-slate-200">{task.participants.map((e)=>(<div className=" bg-slate-500 py-1 px-2 rounded-full text-xs">{e}</div>))}</div>
+          <div className="flex gap-1 flex-wrap text-slate-200">{task.participants.map((e,index)=>(<div key={index} className=" bg-slate-500 py-1 px-2 rounded-full text-xs">{e}</div>))}</div>
         </div>
 
         <div className="my-2">
@@ -72,7 +89,7 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
         </div>
 
 
-        <button className=" bg-slate-700 p-1 rounded text-green-400">Finish Task</button>
+        {task.status !== 'done' && <button className=" bg-slate-700 p-1 rounded text-green-400" onClick={finishTask}>Finish Task</button>}
 
         <div className="flex justify-end text-sm text-slate-400">{} {formatDistanceToNow(new Date(task.createdAt),{addSuffix:true})}</div>
         

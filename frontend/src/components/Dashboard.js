@@ -246,7 +246,7 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-4 gap-2 custom-scrollbar">
            <div> 
-            <p className=" text-center">Urget</p>
+            <p className=" text-center text-red-400 font-bold">Urget</p>
             {
                 tasks && tasks.map((task)=>(
                     <div key={task._id}>  { task.status === 'urget' && task.title.includes(searchTerm) && <div onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
@@ -258,7 +258,7 @@ const Dashboard = () => {
             </div>
             {/* second task list */}
             <div> 
-            <p className=" text-center">In progress</p>
+            <p className=" text-center text-yellow-400 font-bold">In progress</p>
             {
                 tasks && tasks.map((task)=>(
                     <div key={task._id}>  { task.status === 'progress' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
@@ -271,7 +271,7 @@ const Dashboard = () => {
 
             {/* third task list */}
             <div> 
-            <p className=" text-center">Long term</p>
+            <p className=" text-center text-blue-400 font-bold">Long term</p>
             {
                 tasks && tasks.map((task)=>(
                   <div key={task._id}>  { task.status === 'long' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
@@ -284,15 +284,13 @@ const Dashboard = () => {
 
             {/* forth task list */}
             <div> 
-            <p className=" text-center">Delayed</p>
+            <p className=" text-center text-green-400 font-bold">Finished</p>
             {
                 tasks && tasks.map((task)=>(
-                    <div key={task._id}>  { task.status === 'delayed' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
+                    <div key={task._id}>  { task.status === 'done' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
                 ))
             } 
-            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);;setStatus('delayed')}}>
-            <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
-    </div>
+            
             </div>
             
             
