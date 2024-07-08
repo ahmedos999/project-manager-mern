@@ -11,7 +11,6 @@ export const useSignup = ()=>{
 
     const signup = async(email,password)=>{
         setIsLoading(true)
-        setError(null)
     
         const response = await fetch('api/user/signup',
             {
@@ -20,7 +19,7 @@ export const useSignup = ()=>{
                 body:JSON.stringify({email,password})
             })
     
-            const json = response.json()
+            const json = await response.json()
     
             if(response.ok){
                 localStorage.setItem('user',JSON.stringify(json))
