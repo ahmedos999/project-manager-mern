@@ -10,9 +10,9 @@ const Card = ({task}) => {
             <div className=" rounded bg-green-950 mr-2"><p className=" text-green-500 text-xs text-center">Backlog</p></div>
         </div>
         <div className="flex my-2">
-        <div className="w-5 h-5 rounded-full bg-orange-400 mr-2"></div>
-        <div className="w-5 h-5 rounded-full bg-green-400 mr-2"></div>
-        <div className="w-5 h-5 rounded-full bg-blue-400 mr-2"></div>
+            {task.participants.map((part,index)=>(
+                <div className={`w-6 h-6 rounded-full mr-1 flex justify-center items-center text-sm font-bold ${index%3===0?`bg-orange-400`:index%3===1?`bg-green-400`:`bg-blue-400`}`}>{part[0].toUpperCase()}</div>
+            ))}
         </div>
     </div> );   
 }
