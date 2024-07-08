@@ -27,9 +27,10 @@ const SideBar = () => {
     }
     const filterTasks =(updatedFilterList)=>{
         console.log(updatedFilterList)
-        // console.log(allTasks)
         setFlag(false)
-        var filter = allTasks.filter((task)=>updatedFilterList.includes(task.category))
+        var filter = allTasks.filter((task) => {
+            return task.categories.some(cate => updatedFilterList.includes(cate));
+        });
         if(filter.length===0) filter = allTasks
         dispatchTask({type:'SET_TASKS',payload:filter})
     }
@@ -38,7 +39,9 @@ const SideBar = () => {
         if(flag && tasks){
             let uniqueTags = []
             tasks.forEach(element => {
-                if(!uniqueTags.includes(element.category)) uniqueTags.push(element.category)
+                element.categories.forEach(cate=>{
+                    if(!uniqueTags.includes(cate)) uniqueTags.push(cate)
+                })
             });
             setCategories(uniqueTags)
             setAllTasks(tasks)

@@ -70,6 +70,18 @@ const Dashboard = () => {
         participants.splice(index,1)
         setParticipants([...participants])
     }
+    const addcategory = ()=>{
+        if(categories.includes(category))return
+
+        setcategories(prevCategories=>[...prevCategories,category])
+        setCategory('')
+    }
+
+    const removeCategory = (cate)=>{
+        const index = categories.indexOf(cate)
+        categories.splice(index,1)
+        setcategories([...categories])
+    }
 
     const addNotification = async(user_id,project,owner)=>{
 
@@ -113,7 +125,7 @@ const Dashboard = () => {
         }
         const participantsEmails = participants.map((p)=>p.email)
         console.log(participantsEmails)
-        const task = {title:title.trim(),description:description.trim(),category:category.trim(),user_email:user.email,participants:participantsEmails,status}
+        const task = {title:title.trim(),description:description.trim(),categories:categories,user_email:user.email,participants:participantsEmails,status}
         // console.log(participants)
         console.log(task)
         const response = await fetch('/api/tasks',{
@@ -131,7 +143,7 @@ const Dashboard = () => {
         if(response.ok){
             setTitle('')
             setDescription('')
-            setCategory('')
+            setcategories([])
             setModalOpen(false)
             dispatch({type:'CREATE_TASK',payload:json})
 
@@ -151,6 +163,7 @@ const Dashboard = () => {
     const [title,setTitle] = useState('')
     const [description,setDescription] = useState('')
     const [category,setCategory] = useState('')
+    const [categories,setcategories] = useState([])
 
     const [error,setError] = useState()
 
@@ -203,14 +216,6 @@ const Dashboard = () => {
         fetchTasks()
         fetchUsers()
         fetchNOtifications()
-
-        // socket.on('notification', (message) => {
-        //     alert(message); // Or use a more sophisticated notification system
-        //   });
-
-        //   return () => {
-        //     socket.off('notification');
-        //   };
         
     },[dispatch,user])
 
@@ -308,7 +313,15 @@ const Dashboard = () => {
         <label className="text-sm">Task Description</label>
         <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="Descripe your task here" onChange={(e)=>setDescription(e.target.value)} value={description}/>
         <label className="text-sm">Task Category</label>
+        <div className="flex gap-2">
         <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="Add your task categories here" onChange={(e)=>setCategory(e.target.value)} value={category} />
+        <button className="p-1 bg-slate-500 rounded text-sm h-8" onClick={addcategory}>Add</button>
+        </div>
+
+        <div className="flex flex-wrap">
+            {categories.map((cate,index)=>(<p key={index} className="text-xs my-2 mx-1 py-1 px-2 rounded-full bg-slate-500" onClick={()=>removeCategory(cate)}>{cate}</p>))}
+                
+            </div>
 
         <label className="text-sm block">Add users to task</label>
         <select name="allusers" id="users" className="w-full" onChange={(e)=>handleUserSelection(e)}>

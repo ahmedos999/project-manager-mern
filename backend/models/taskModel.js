@@ -11,8 +11,8 @@ const tasksSchema = Schema({
         type:String,
         required:true
     },
-    category:{
-        type:String,
+    categories:{
+        type:[String],
         required:true
     },
     user_id:{
