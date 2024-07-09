@@ -1,8 +1,6 @@
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const Card = ({task}) => {
-    console.log(task.categories )
-    console.log(task.participants )
     return ( <div className="rounded-md bg-gray-800 shadow-md p-4 flex flex-col justify-between m-2">
         <div className="flex justify-between items-center"><h2 className=" font-bold teko text-lg">{task.title}</h2><p className="text-xs text-gray-500">{formatDistanceToNow(new Date(task.createdAt),{addSuffix:true})}</p></div>
         <p className='my-2 text-sm text-gray-300'>{task.description}</p>

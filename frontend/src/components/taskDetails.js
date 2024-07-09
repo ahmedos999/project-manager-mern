@@ -26,6 +26,12 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
   const {user} = useAuthContext()
 
   const deletetask = async()=>{
+
+
+    if(task.user_email!==user.email){
+      setError('Only task creater can Delete task')
+      return
+    }
     const response = await fetch('api/tasks/'+task._id,{
       method:'DELETE',
       headers:{
@@ -54,7 +60,6 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
       setError(json.error)
     }
     dispatch({type:'FINISH_TASK',payload:task})
-    // console.log(task)
     closeModol()
   }
 
@@ -97,7 +102,7 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
 
         <div className="flex justify-end text-sm text-slate-400">{} {formatDistanceToNow(new Date(task.createdAt),{addSuffix:true})}</div>
         
-        {error && <div>{error}</div>}
+        {error && <div className=" text-red-400">{error}</div>}
       </Modal>
     </div> );
 }

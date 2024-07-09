@@ -187,7 +187,9 @@ const Dashboard = () => {
             const json = await res.json()
 
             if(res.ok){
-                setUsers(json)
+                let temp = json.filter(e=>e.email!==user.email)
+                console.log(temp)
+                setUsers(temp)
                 
             }
         }
@@ -326,7 +328,7 @@ const Dashboard = () => {
         <label className="text-sm block">Add users to task</label>
         <select name="allusers" id="users" className="w-full" onChange={(e)=>handleUserSelection(e)}>
             {users.map((e)=>(
-                <option key={e._id}>{e.email}</option>
+                user.email && <option key={e._id}>{e.email}</option>
             ))}
         </select>
 
