@@ -5,10 +5,10 @@ import { useTaskContext } from '../hooks/useTaskContext';
 
 const SideBar = () => {
     const {user,dispatch} = useAuthContext()
-    const {tasks,dispatch:dispatchTask} = useTaskContext()
+    const {tasks,allTasks,dispatch:dispatchTask} = useTaskContext()
     const [categories,setCategories] = useState([])
     const [flag,setFlag] = useState(true)
-    const [allTasks,setAllTasks] = useState([])
+    // const [allTasks,setAllTasks] = useState([])
     const [filterList, setFilterList] = useState([]);
     
     
@@ -26,7 +26,7 @@ const SideBar = () => {
         filterTasks([...filterList, filter]);
     }
     const filterTasks =(updatedFilterList)=>{
-        console.log(updatedFilterList)
+        console.log(allTasks)
         setFlag(false)
         var filter = allTasks.filter((task) => {
             return task.categories.some(cate => updatedFilterList.includes(cate));
@@ -36,25 +36,26 @@ const SideBar = () => {
     }
     useEffect(()=>{
         
-        if(flag && tasks){
+        if( allTasks){
             let uniqueTags = []
-            tasks.forEach(element => {
+            allTasks.forEach(element => {
                 element.categories.forEach(cate=>{
                     if(!uniqueTags.includes(cate)) uniqueTags.push(cate)
                 })
             });
             setCategories(uniqueTags)
-            setAllTasks(tasks)
+            // setAllTasks(tasks)
         }
         
         
-    },[tasks,flag])
+    },[allTasks,flag])
 
     const logout =()=>{
         localStorage.removeItem('user')
         setCategories(null)
         setFilterList(null)
         dispatch({type:'LOGOUT'})
+        dispatchTask({type:'EMPTY_TASK'})
     }
     return ( <div className="sidebar p-4 flex flex-col h-screen w-full justify-between">
         <div className="flex items-center mt-8">

@@ -73,9 +73,13 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
         <p className="ml-2 ">{task.description}</p>
         </div>
 
-        <div>
-          <h2 className=" text-slate-400">Categories</h2>
-        <p className=" bg-red-600 rounded-full py-1 text-xs px-2 w-min text-red-200">{task.category}</p>
+        <div className="my-2">
+          <h2 className=" text-slate-400 ">Task Categories</h2>
+          <div className="flex gap-1">
+          {task.categories.map((category,index)=>(
+                <div key={index} className={` rounded-full mr-1 flex justify-center items-center text-xs p-1 ${index%3===0?`bg-purple-500`:index%3===1?`bg-red-500`:`bg-blue-500`}`}>{category}</div>
+            ))}
+          </div>
         </div>
 
         <div className="my-2">

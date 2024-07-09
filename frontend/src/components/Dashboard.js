@@ -177,7 +177,7 @@ const Dashboard = () => {
             const json = await response.json()
 
             if(response.ok){
-                dispatch({type:'SET_TASKS',payload:json})
+                dispatch({type:'SET_ALL_TASKS',payload:json})
             }
         }
 
