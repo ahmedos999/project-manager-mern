@@ -35,3 +35,40 @@ body{
 .custom-shadow-blue{
   box-shadow: rgba(4, 0, 255, 0.4) 0px 1px 2px 0px, rgba(15, 3, 240, 0.5) 0px 1px 3px 1px;
 }
+
+.email-container {
+  position: relative;
+  display: inline-block;
+}
+
+.email-initial {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem; 
+  border-radius: 9999px;
+  padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
+  width: 50px;
+  height: 50px;
+}
+
+.email-initial:hover .email-full {
+  opacity: 1;
+  visibility: visible;
+  font-size: 1rem;
+}
+
+.email-full {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem;
+  border-radius: 0.5rem; 
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  color: white;
+}
