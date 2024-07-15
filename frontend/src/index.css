@@ -72,3 +72,6 @@ body{
   transition: all 0.3s ease-in-out;
   color: white;
 }
+.bg-img{
+  background-image: url('imgs/diamond-bg.svg');
+}
