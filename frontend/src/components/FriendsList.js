@@ -20,10 +20,10 @@ const Friendslist = () => {
             }
         }
         fetchfriends()
-    },[])
+    },[user.email])
     return ( <div className="flex flex-col gap-2">
         {
-            friends && friends.map((friend)=>(<FriendCard name={friend}/>))
+            friends && friends.map((friend,index)=>(<FriendCard key={index} name={friend}/>))
         }
         
     </div> );

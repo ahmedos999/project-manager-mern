@@ -5,7 +5,7 @@ import { useTaskContext } from '../hooks/useTaskContext';
 
 const SideBar = () => {
     const {user,dispatch} = useAuthContext()
-    const {tasks,allTasks,dispatch:dispatchTask} = useTaskContext()
+    const {allTasks,dispatch:dispatchTask} = useTaskContext()
     const [categories,setCategories] = useState([])
     const [flag,setFlag] = useState(true)
     // const [allTasks,setAllTasks] = useState([])
