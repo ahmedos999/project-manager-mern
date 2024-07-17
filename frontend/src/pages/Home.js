@@ -4,7 +4,7 @@ import SideBar from "../components/sidebar";
 
 
 
-
+// "proxy": "https://project-manager-mern-hrm0.onrender.com",
 const Home = () => {
     return ( <div className=" grid grid-cols-8">
         <SideBar></SideBar>
