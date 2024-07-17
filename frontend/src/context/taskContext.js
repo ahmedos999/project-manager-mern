@@ -14,17 +14,13 @@ export const taskReducer = (state,action)=>{
         case 'CREATE_TASK':return{tasks:[action.payload,...state.tasks],allTasks:[action.payload,...state.allTasks]}
         case 'DELETE_TASK':return{tasks:state.tasks.filter((task)=>task._id!==action.payload._id),allTasks:state.allTasks.filter((task)=>task._id!==action.payload._id)}
         case 'FINISH_TASK':return{tasks:state.tasks.map((task) => {
-            console.log(task)
             if (task._id === action.payload._id) {
-                console.log(task)
                 return { ...task, status: 'done' };
             }
             return task;
         }),
         allTasks:state.allTasks.map((task) => {
-            console.log(task)
             if (task._id === action.payload._id) {
-                console.log(task)
                 return { ...task, status: 'done' };
             }
             return task;

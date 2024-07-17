@@ -9,10 +9,13 @@ export const useSignup = ()=>{
     const [error,setError] = useState(null)
     const {dispatch} = useAuthContext()
 
+ const urlApi = 'https://project-manager-mern-hrm0.onrender.com'
+//  const urlApi = 'http://localhost:4000'
+
     const signup = async(email,password)=>{
         setIsLoading(true)
     
-        const response = await fetch('api/user/signup',
+        const response = await fetch(`${urlApi}/api/user/signup`,
             {
                 method:'POST',
                 headers:{'Content-Type':'application/json'},

@@ -17,11 +17,8 @@ const app = express()
   
 
 const allowedOrigins = [
-    'http://localhost:3000/',
-    'http://localhost:4000/',
-    'https://project-manager-mern-five.vercel.app/',
-    'https://project-manager-mern-hrm0.onrender.com'
-
+    'http://localhost:3000',
+    'https://project-manager-mern-five.vercel.app',
   ];
 
 

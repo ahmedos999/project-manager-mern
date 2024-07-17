@@ -18,6 +18,9 @@ const customStyles = {
     },
   };
 
+const urlApi = 'https://project-manager-mern-hrm0.onrender.com'
+// const urlApi = 'http://localhost:4000'
+
 const TaskDetails = ({task,isOpen,closeModol}) => {
 
   // const [modalOpen,setModalOpen] = useState(true)
@@ -32,7 +35,7 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
       setError('Only task creater can Delete task')
       return
     }
-    const response = await fetch('api/tasks/'+task._id,{
+    const response = await fetch(`${urlApi}/api/tasks/`+task._id,{
       method:'DELETE',
       headers:{
         'Authorization':`Bearer ${user.token}`
@@ -48,7 +51,7 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
   }
 
   const finishTask=async()=>{
-    const response = await fetch('api/tasks/'+task._id,{
+    const response = await fetch(`${urlApi}/api/tasks/`+task._id,{
       method:'PATCH',
       headers:{
         'Authorization':`Bearer ${user.token}`

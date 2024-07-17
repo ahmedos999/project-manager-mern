@@ -10,6 +10,9 @@ import { IoIosNotifications } from "react-icons/io";
 
 // const socket = io('http://localhost:3000');
 
+const urlApi = 'https://project-manager-mern-hrm0.onrender.com'
+// const urlApi = 'http://localhost:4000'
+
 const customStyles = {
     content: {
       top: "50%",
@@ -85,7 +88,7 @@ const Dashboard = () => {
 
     const addNotification = async(user_id,project,owner)=>{
 
-        const response = await fetch('/api/notification',{
+        const response = await fetch(`${urlApi}/api/notification`,{
             method:'POST',
             body:JSON.stringify({user_id,project,owner}),
             headers:{
@@ -102,7 +105,7 @@ const Dashboard = () => {
     }
 
     const markasRead = async()=>{
-        const response = await fetch('/api/notification',{
+        const response = await fetch(`${urlApi}/api/notification`,{
             method:'PATCH',
             headers:{
                 'content-type':'application/json',
@@ -128,7 +131,7 @@ const Dashboard = () => {
         const task = {title:title.trim(),description:description.trim(),categories:categories,user_email:user.email,participants:participantsEmails,status}
         // console.log(participants)
         console.log(task)
-        const response = await fetch('/api/tasks',{
+        const response = await fetch(`${urlApi}/api/tasks`,{
             method:'POST',
             body:JSON.stringify(task),
             headers:{
@@ -169,7 +172,7 @@ const Dashboard = () => {
 
     useEffect(()=>{
         const fetchTasks = async()=>{
-            const response = await fetch('/api/tasks',{
+            const response = await fetch(`${urlApi}/api/tasks`,{
                 headers:{
                     'Authorization':`Bearer ${user.token}`
                 }
@@ -182,7 +185,7 @@ const Dashboard = () => {
         }
 
         const fetchUsers = async()=>{
-            const res = await fetch('/api/user/allusers')
+            const res = await fetch(`${urlApi}/api/user/allusers`)
 
             const json = await res.json()
 
@@ -195,7 +198,7 @@ const Dashboard = () => {
         }
 
         const fetchNOtifications = async()=>{
-            const res = await fetch('/api/notification',{
+            const res = await fetch(`${urlApi}/api/notification`,{
                 headers:{
                     'Authorization':`Bearer ${user.token}`
                 }
