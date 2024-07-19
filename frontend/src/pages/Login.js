@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSignin } from "../hooks/useSignin";
+import Spinner from "../components/spinner";
 
 const Login = () => {
     const [email,setEmail] = useState('')
@@ -20,7 +21,7 @@ const Login = () => {
         <input type="password" placeholder="xxxxxxx" name="" id="pass" className="mb-2 rounded border-2 border-slate-800 text-slate-900 p-1" value={password} onChange={(e)=>setPassowrd(e.target.value)}/>
         <a href="/signup" className="text-sm underline">Dont have an account signup?</a>
         </div>
-        <button className="bg-slate-600 w-full py-2 px-8 rounded mx-auto mt-4 text-white font-bold hover:bg-slate-200 hover:text-black transition-all" onClick={submit} disabled={isLoading}>Login</button>
+        <button className="bg-slate-600 w-full py-2 px-8 rounded mx-auto mt-4 text-white font-bold hover:bg-slate-200 hover:text-black transition-all flex justify-center items-center" onClick={submit} disabled={isLoading}>{isLoading?<Spinner></Spinner>:<div>Login</div>}</button>
         {error && <div className='mt-2 text-sm text-red-500 '>{error}</div>}
     </div>
         </div>

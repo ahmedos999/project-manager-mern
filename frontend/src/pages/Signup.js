@@ -1,6 +1,7 @@
 
 import {useState} from 'react'
 import { useSignup } from '../hooks/useSignup'
+import Spinner from "../components/spinner";
 
 export default function Signup() {
     const [email,setEmail] = useState()
@@ -32,7 +33,8 @@ export default function Signup() {
     {passError && <div className='mt-2 text-sm text-red-500 '>{passError}</div>}
     <a href="/login" className="text-sm underline">Already have an account ?</a>
     </div>
-    <button className="bg-slate-600 w-full py-2 px-8 rounded mx-auto mt-4 text-white font-bold hover:bg-slate-200 hover:text-black transition-all" onClick={submit} disabled={isLoading}>Sign up</button>
+    <button className="bg-slate-600 w-full py-2 px-8 rounded mx-auto mt-4 text-white font-bold hover:bg-slate-200 hover:text-black transition-all flex justify-center items-center" onClick={submit} disabled={isLoading}>{isLoading?<Spinner></Spinner>:<div>Signup</div>}</button>
+
     {error && <div className='mt-2 text-sm text-red-500 '>{error}</div>}
 </div>
     </div> );
