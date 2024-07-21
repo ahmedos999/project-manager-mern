@@ -7,7 +7,7 @@ export const useSignin = ()=>{
  const [error,setError] = useState(null)
  const {dispatch} = useAuthContext()
  const urlApi = 'https://project-manager-mern-hrm0.onrender.com'
-//  const urlApi = 'http://localhost:4000/'
+//  const urlApi = 'http://localhost:4000'
 
     const signin = async(email,password)=>{
         console.log(email+" "+password)

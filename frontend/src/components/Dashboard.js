@@ -7,6 +7,7 @@ import TaskDetails from "./taskDetails";
 import { useTaskContext } from "../hooks/useTaskContext";
 import {useAuthContext} from '../hooks/useAuthContext'
 import { IoIosNotifications } from "react-icons/io";
+import Shimmer from "./shimmer";
 
 // const socket = io('http://localhost:3000');
 
@@ -217,8 +218,8 @@ const Dashboard = () => {
                 
             }
         }
-
-        fetchTasks()
+        setTimeout(fetchTasks,5000)
+        
         fetchUsers()
         fetchNOtifications()
         
@@ -254,7 +255,7 @@ const Dashboard = () => {
         <h2 className=" text-4xl font-bold teko">Task Boards</h2>
 
         <div className="grid grid-cols-4 gap-2 custom-scrollbar">
-           <div> 
+           {!tasks?<Shimmer></Shimmer>:<div> 
             <p className=" text-center text-red-400 font-bold">urgent</p>
             {
                 tasks && tasks.map((task)=>(
@@ -264,9 +265,9 @@ const Dashboard = () => {
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('urgent')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
-            </div>
+            </div>}
             {/* second task list */}
-            <div> 
+            {!tasks?<Shimmer></Shimmer>:<div> 
             <p className=" text-center text-yellow-400 font-bold">In progress</p>
             {
                 tasks && tasks.map((task)=>(
@@ -276,10 +277,10 @@ const Dashboard = () => {
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('progress')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
-            </div>
+            </div>}
 
             {/* third task list */}
-            <div> 
+            {!tasks?<Shimmer></Shimmer>:<div> 
             <p className=" text-center text-blue-400 font-bold">Long term</p>
             {
                 tasks && tasks.map((task)=>(
@@ -289,10 +290,10 @@ const Dashboard = () => {
             <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('long')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
-            </div>
+            </div>}
 
             {/* forth task list */}
-            <div> 
+            {!tasks?<Shimmer></Shimmer>:<div> 
             <p className=" text-center text-green-400 font-bold">Finished</p>
             {
                 tasks && tasks.map((task)=>(
@@ -300,7 +301,7 @@ const Dashboard = () => {
                 ))
             } 
             
-            </div>
+            </div>}
             
             
         

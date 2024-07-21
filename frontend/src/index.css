@@ -84,6 +84,26 @@ body{
   height: 30px;
   animation: spin 1s linear infinite;
 }
+.shimmer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background: linear-gradient(45deg, #475569 0%, #334155 20%, #475569 40%, #334155 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+      background-position: -200% 0;
+  }
+  100% {
+      background-position: 200% 0;
+  }
+}
 
 @keyframes spin {
   0% {
