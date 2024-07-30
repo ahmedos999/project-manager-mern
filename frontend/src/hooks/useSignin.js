@@ -6,10 +6,11 @@ export const useSignin = ()=>{
  const [isLoading,setIsLoading] = useState(false)
  const [error,setError] = useState(null)
  const {dispatch} = useAuthContext()
- const urlApi = 'https://project-manager-mern-hrm0.onrender.com'
+ const urlApi = process.env.REACT_APP_API_URL
 //  const urlApi = 'http://localhost:4000'
 
     const signin = async(email,password)=>{
+        console.log(process.env.REACT_APP_API_URL)
         console.log(email+" "+password)
         setIsLoading(true)
         const response = await fetch(`${urlApi}/api/user/login`,{

@@ -11,7 +11,7 @@ import Shimmer from "./shimmer";
 
 // const socket = io('http://localhost:3000');
 
-const urlApi = 'https://project-manager-mern-hrm0.onrender.com'
+const urlApi = process.env.REACT_APP_API_URL
 // const urlApi = 'http://localhost:4000'
 
 const customStyles = {
@@ -314,11 +314,11 @@ const Dashboard = () => {
         appElement={document.getElementById('root')}
       >
         <div className="flex justify-between"><h2 className="text-3xl font-bold teko mb-8">Add a new Task</h2><MdAddToPhotos className="text-2xl"></MdAddToPhotos></div>
-        <label className="text-sm">Task Title</label>
+        <label className="text-slate-200 text-sm font-bold">Task Title</label>
         <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="here the name of your task" onChange={(e)=>setTitle(e.target.value)} value={title} />
-        <label className="text-sm">Task Description</label>
+        <label className="text-slate-200 text-sm font-bold">Task Description</label>
         <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="Descripe your task here" onChange={(e)=>setDescription(e.target.value)} value={description}/>
-        <label className="text-sm">Task Category</label>
+        <label className="text-slate-200 text-sm font-bold">Task Category</label>
         <div className="flex gap-2">
         <input type="text" className="w-full rounded p-1 mb-2 placeholder:text-sm text-gray-900" placeholder="Add your task categories here" onChange={(e)=>setCategory(e.target.value)} value={category} />
         <button className="p-1 bg-slate-500 rounded text-sm h-8" onClick={addcategory}>Add</button>
@@ -329,7 +329,7 @@ const Dashboard = () => {
                 
             </div>
 
-        <label className="text-sm block">Add users to task</label>
+        <label className="text-slate-200 text-sm font-bold block">Add users to task</label>
         <select name="allusers" id="users" className="w-full" onChange={(e)=>handleUserSelection(e)}>
             {users.map((e)=>(
                 user.email && <option key={e._id}>{e.email}</option>
@@ -340,7 +340,7 @@ const Dashboard = () => {
             {participants.map((e,index)=>(<p key={index} className="text-xs my-2 mx-1 py-1 px-2 rounded-full bg-slate-500" onClick={()=>removeUser(e)}>{e.email}</p>))}
                 
             </div>
-        <div className="flex justify-center mt-4"><button className=" bg-slate-600 py-2 px-8 rounded hover:bg-slate-700 mt-2" onClick={handleSumbit}>Add Task</button></div>
+        <div className="flex justify-center mt-4"><button className=" bg-slate-600 py-2 px-8 rounded hover:bg-slate-700 mt-2 w-full" onClick={handleSumbit}>Add Task</button></div>
 
         {error && <div className="mt-4 text-red-600 text-sm">{error}</div>}
 

@@ -9,7 +9,7 @@ export const useSignup = ()=>{
     const [error,setError] = useState(null)
     const {dispatch} = useAuthContext()
 
- const urlApi = 'https://project-manager-mern-hrm0.onrender.com'
+ const urlApi = process.env.REACT_APP_API_URL
 //  const urlApi = 'http://localhost:4000'
 
     const signup = async(email,password)=>{

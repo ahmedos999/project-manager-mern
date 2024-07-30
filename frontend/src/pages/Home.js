@@ -1,3 +1,4 @@
+import { Chart } from "../components/Chart";
 import Dashboard from "../components/Dashboard";
 import Friendslist from "../components/FriendsList";
 import SideBar from "../components/sidebar";
@@ -11,8 +12,10 @@ const Home = () => {
         <div className="col-span-6">
         <Dashboard></Dashboard>
         </div>
-        <div className="place-self-center">
+        <div className="flex flex-col items-center justify-around">
+        <Chart ></Chart>
         <Friendslist></Friendslist>
+        <div></div>
         </div>
     </div> );
 }

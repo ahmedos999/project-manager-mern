@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useTaskContext } from '../hooks/useTaskContext';
-
+import { IoLogOutOutline } from "react-icons/io5";
 
 const SideBar = () => {
     const {user,dispatch} = useAuthContext()
@@ -62,11 +62,15 @@ const SideBar = () => {
             <div className="w-14 h-14 mr-2 bg-slate-600 rounded-full flex justify-center items-center text-3xl">{user.email.substring(0,1).toUpperCase()}</div>
             <h2 className="">{user.email.substring(0,(user.email.indexOf('@')))}</h2>
         </div>
+        
+        <div>
+            <h2 className='teko text-2xl font-bold mb-2'>Tags</h2>
         <div className='flex gap-1 flex-wrap'>
-        {categories && categories.map((category,index)=>(<div className='my-1' key={index} onClick={()=>addFilter(category)} > <p className={`p-1 rounded-full w-min text-sm${filterList.includes(category)?` bg-red-400`:` bg-slate-500`}`}>{category}</p></div>))}
+        {categories && categories.map((category,index)=>(<div className='my-1' key={index} onClick={()=>addFilter(category)} > <p className={`p-1 rounded w-min text-sm${filterList.includes(category)?` bg-red-400`:` bg-slate-500`}`}>{category}</p></div>))}
         </div>
-        <button onClick={logout} className='font-bold self-start rounded p-1 bg-gray-800'>
-            Logout
+        </div>
+        <button onClick={logout} className='font-bold self-start rounded p-1 bg-gray-800 flex justify-center items-center gap-2'>
+            Logout <span> <IoLogOutOutline></IoLogOutOutline></span>
         </button>
     </div> );
 }
