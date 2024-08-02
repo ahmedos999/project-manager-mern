@@ -8,6 +8,9 @@ import { useTaskContext } from "../hooks/useTaskContext";
 import {useAuthContext} from '../hooks/useAuthContext'
 import { IoIosNotifications } from "react-icons/io";
 import Shimmer from "./shimmer";
+import {DndContext} from '@dnd-kit/core';
+import Draggable from './Draggable';
+import Droppable from "./Droppable";
 
 // const socket = io('http://localhost:3000');
 
@@ -59,6 +62,30 @@ const Dashboard = () => {
     const [notification,setNotification] = useState([])
 
     const [status,setStatus] = useState('long')
+
+    const handleDragEnd = (event)=>{
+        if(!event.over) return
+        if(event.over.id === event.active.data.current.status){
+            console.log('this is the same')
+            return
+        }
+        updateTask(event.active.data.current,event.over.id)
+    }
+    const updateTask=async(task,newStatus)=>{
+        const response = await fetch(`${urlApi}/api/tasks/`+task._id,{
+          method:'PATCH',
+          body:JSON.stringify({status:newStatus}),
+          headers:{
+            'Authorization':`Bearer ${user.token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        const json =  await response.json()
+        console.log(json)
+        const newTask = {...task,status:newStatus}
+        dispatch({type:'UPDATE_TASK',payload:newTask})
+      }
+
     const openTaskModal = (task)=>{
         openModel()
         setCurrentTask(task)
@@ -128,10 +155,7 @@ const Dashboard = () => {
             return
         }
         const participantsEmails = participants.map((p)=>p.email)
-        console.log(participantsEmails)
         const task = {title:title.trim(),description:description.trim(),categories:categories,user_email:user.email,participants:participantsEmails,status}
-        // console.log(participants)
-        console.log(task)
         const response = await fetch(`${urlApi}/api/tasks`,{
             method:'POST',
             body:JSON.stringify(task),
@@ -253,60 +277,69 @@ const Dashboard = () => {
         </div>
         
         <h2 className=" text-4xl font-bold teko">Task Boards</h2>
-
+        <DndContext onDragEnd={handleDragEnd}>
         <div className="grid grid-cols-4 gap-2 custom-scrollbar">
-           {!tasks?<Shimmer></Shimmer>:<div> 
+           {!tasks?<Shimmer></Shimmer>:<Droppable status='urgent' color='#450a0a '><div> 
             <p className=" text-center text-red-400 font-bold">urgent</p>
             {
-                tasks && tasks.map((task)=>(
-                    <div key={task._id}>  { task.status === 'urgent' && task.title.includes(searchTerm) && <div onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
-                ))
+                tasks && tasks.map((task)=>{
+                    if(task.status === 'urgent' && task.title.includes(searchTerm))
+                    return <div key={task._id} className="mx-2"><Draggable id={task._id} task={task} openmodel={()=>openTaskModal(task)}> <Card task={task} ></Card></Draggable></div>
+                    return <></>
+})
             } 
-            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('urgent')}}>
+            <div className="my-2 ml-4 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('urgent')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
-            </div>}
+            </div></Droppable>}
             {/* second task list */}
-            {!tasks?<Shimmer></Shimmer>:<div> 
+            {!tasks?<Shimmer></Shimmer>:<Droppable status='progress' color='#422006'><div> 
             <p className=" text-center text-yellow-400 font-bold">In progress</p>
             {
-                tasks && tasks.map((task)=>(
-                    <div key={task._id}>  { task.status === 'progress' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
-                ))
+                tasks && tasks.map((task)=>{
+                    if(task.status === 'progress' && task.title.includes(searchTerm))
+                    return <div key={task._id} className="mx-2"><Draggable id={task._id} task={task} openmodel={()=>openTaskModal(task)}> <Card task={task} ></Card></Draggable></div>
+                    return <></>
+})
             } 
-            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('progress')}}>
+            <div className="my-2 ml-4 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('progress')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
-            </div>}
+            </div></Droppable>}
 
             {/* third task list */}
-            {!tasks?<Shimmer></Shimmer>:<div> 
+            {!tasks?<Shimmer></Shimmer>:<Droppable status='long' color='#172554 '><div> 
             <p className=" text-center text-blue-400 font-bold">Long term</p>
             {
-                tasks && tasks.map((task)=>(
-                  <div key={task._id}>  { task.status === 'long' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
-                ))
+                tasks && tasks.map((task)=>{
+                    if(task.status === 'long' && task.title.includes(searchTerm))
+                    return <div key={task._id} className="mx-2"><Draggable id={task._id} task={task} openmodel={()=>openTaskModal(task)}> <Card task={task} ></Card></Draggable></div>
+                    return <></>
+})
             } 
-            <div className="m-2 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('long')}}>
+            <div className="my-2 ml-4 rounded-md bg-gray-800 hover:bg-slate-700 shadow-md p-4 cursor-pointer flex justify-center items-center" onClick={()=>{setModalOpen(true);setStatus('long')}}>
             <div className="h-16 w-16 rounded-full bg-slate-600 flex justify-center items-center"><IoIosAddCircle className="text-3xl"/></div>
     </div>
-            </div>}
+            </div></Droppable>}
 
             {/* forth task list */}
-            {!tasks?<Shimmer></Shimmer>:<div> 
+            {!tasks?<Shimmer></Shimmer>:<Droppable status='done' color='#052e16'><div> 
             <p className=" text-center text-green-400 font-bold">Finished</p>
             {
-                tasks && tasks.map((task)=>(
-                    <div key={task._id}>  { task.status === 'done' && task.title.includes(searchTerm) && <div key={task._id} onClick={()=>openTaskModal(task)}><Card task={task} ></Card></div>} </div>
-                ))
+                tasks && tasks.map((task)=>{
+                    if(task.status === 'done' && task.title.includes(searchTerm))
+                    return <div key={task._id} className="mx-2"><Draggable id={task._id} task={task} openmodel={()=>openTaskModal(task)}> <Card task={task} ></Card></Draggable></div>
+                    return <></>
+})
             } 
             
-            </div>}
+            </div></Droppable>}
             
             
         
             
         </div>
+        </DndContext>
         <Modal
         isOpen={modalOpen}
         onRequestClose={() => setModalOpen(false)}

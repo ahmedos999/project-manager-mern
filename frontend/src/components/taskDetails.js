@@ -53,8 +53,10 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
   const finishTask=async()=>{
     const response = await fetch(`${urlApi}/api/tasks/`+task._id,{
       method:'PATCH',
+      body:JSON.stringify({status:'done'}),
       headers:{
-        'Authorization':`Bearer ${user.token}`
+        'Authorization':`Bearer ${user.token}`,
+        'Content-Type': 'application/json'
       }
     })
     const json =  await response.json()
@@ -62,7 +64,8 @@ const TaskDetails = ({task,isOpen,closeModol}) => {
     if(!response.ok){
       setError(json.error)
     }
-    dispatch({type:'FINISH_TASK',payload:task})
+    const newTask = {...task,status:'done'}
+    dispatch({type:'UPDATE_TASK',payload:newTask})
     closeModol()
   }
 

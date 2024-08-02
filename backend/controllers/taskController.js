@@ -55,14 +55,18 @@ const deleteTask = async (req,res)=>{
 
 }
 
-const finishTask = async(req,res)=>{
+const updateTask = async(req,res)=>{
    const {id} = req.params
+   const {status} = req.body
 
    if(!mongoose.Types.ObjectId.isValid(id)){
       return res.status(404).json({error:"No such Task"})
    }
+   if(!status){
+      return res.status(400).json({error:'No body found'})
+   }
 
-    const task = await Task.updateOne({_id:id},{status:'done'})
+    const task = await Task.updateOne({_id:id},{status:status})
 
     if(!task){
       return res.status(400).json({error:'No such task'})
@@ -76,5 +80,5 @@ module.exports = {
     createTask,
     getTasks,
     deleteTask,
-    finishTask
+    updateTask
 }
