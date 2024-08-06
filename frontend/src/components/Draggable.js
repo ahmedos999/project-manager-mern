@@ -17,8 +17,6 @@ function Draggable(props) {
   const handleClick = (event) => {
     if (!isDragging) {
       props.openmodel()
-      console.log('Button clicked!', event);
-      // Call any other function or perform any action you want
     }
   };
 

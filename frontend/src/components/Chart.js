@@ -17,7 +17,6 @@ export const Chart = ()=>{
 
     const {tasks} = useTaskContext()
     useEffect(()=>{
-      console.log('ran')
       const newData = [
         { name: 'urgent', value: 0 },
         { name: 'progress', value: 0 },

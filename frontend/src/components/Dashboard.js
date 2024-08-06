@@ -64,11 +64,8 @@ const Dashboard = () => {
     const [status,setStatus] = useState('long')
 
     const handleDragEnd = (event)=>{
-        if(!event.over) return
-        if(event.over.id === event.active.data.current.status){
-            console.log('this is the same')
-            return
-        }
+        if(!event.over || event.over.id === event.active.data.current.status) return
+        
         updateTask(event.active.data.current,event.over.id)
     }
     const updateTask=async(task,newStatus)=>{
@@ -81,7 +78,6 @@ const Dashboard = () => {
           }
         })
         const json =  await response.json()
-        console.log(json)
         const newTask = {...task,status:newStatus}
         dispatch({type:'UPDATE_TASK',payload:newTask})
       }
@@ -92,7 +88,6 @@ const Dashboard = () => {
     }
     const handleUserSelection = (e)=>{
         const selectedIndex = e.target.options.selectedIndex;
-        console.log(users[selectedIndex])
         if(!participants.includes(users[selectedIndex]))
         setParticipants([...participants,users[selectedIndex]])
     }
@@ -125,10 +120,6 @@ const Dashboard = () => {
                   
             }
         })
-
-        if(response.ok){
-            console.log('notification added to '+user_id)
-        }
         
     }
 
@@ -143,7 +134,6 @@ const Dashboard = () => {
         })
 
         if(response.ok){
-            console.log(response)
             setUnReadNotificationCount(0)
         }
 
@@ -216,7 +206,6 @@ const Dashboard = () => {
 
             if(res.ok){
                 let temp = json.filter(e=>e.email!==user.email)
-                console.log(temp)
                 setUsers(temp)
                 
             }

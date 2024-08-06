@@ -10,8 +10,6 @@ export const useSignin = ()=>{
 //  const urlApi = 'http://localhost:4000'
 
     const signin = async(email,password)=>{
-        console.log(process.env.REACT_APP_API_URL)
-        console.log(email+" "+password)
         setIsLoading(true)
         const response = await fetch(`${urlApi}/api/user/login`,{
             method:'POST',
@@ -25,7 +23,6 @@ export const useSignin = ()=>{
             setIsLoading(false)
             dispatch({type:'LOGIN',payload:json})
         }else{
-            console.log(json)
             setIsLoading(false)
             setError(json.error)
         }

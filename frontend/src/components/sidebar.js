@@ -26,7 +26,6 @@ const SideBar = () => {
         filterTasks([...filterList, filter]);
     }
     const filterTasks =(updatedFilterList)=>{
-        console.log(allTasks)
         setFlag(false)
         var filter = allTasks.filter((task) => {
             return task.categories.some(cate => updatedFilterList.includes(cate));

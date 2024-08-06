@@ -36,7 +36,6 @@ const signupUser = async(req,res)=>{
 const getallusers = async(req,res)=>{
     try{
         const allUsers = await User.find().select('email')
-        // console.log(allUsers)
         if(allUsers){
             res.status(200).json(allUsers)
         }

@@ -13,7 +13,6 @@ const FriendCard = ({name}) => {
 
     let number = Math.floor(Math.random() * 6)
 
-    console.log(number)
     return ( 
 <div className="email-container">
       <div className={`email-initial ${color[number]}`}>
